@@ -985,9 +985,6 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
         </div>;
       })}
     </>}
-
-    {/* BİLDİRİM MODALI */}
-    {bildirim && <BildirimModal bildirim={bildirim} onClose={()=>{setBildirim(null);setTab("liste");}}/>}
   </>;
 }
 
@@ -1624,5 +1621,8 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
         </div>
       </div>}
     </>}
+
+    {/* BİLDİRİM MODALI */}
+    {bildirim && <BildirimModal bildirim={bildirim} onClose={()=>{setBildirim(null);setTab("liste");}}/>}
   </>;
 }
