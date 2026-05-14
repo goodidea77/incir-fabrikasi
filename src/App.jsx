@@ -985,7 +985,94 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
         </div>;
       })}
     </>}
+
+    {/* BİLDİRİM MODALI */}
+    {bildirim && <BildirimModal bildirim={bildirim} onClose={()=>{setBildirim(null);setTab("liste");}}/>}
   </>;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BİLDİRİM MODALI
+// ═══════════════════════════════════════════════════════════════
+function BildirimModal({ bildirim, onClose }) {
+  const { sipNo, musteriAd, urunAd, adet, tahmini, tel, email } = bildirim;
+
+  const mesaj = `Sayın ${musteriAd},\n\nSiparişiniz alınmıştır.\nSipariş No: ${sipNo}\nÜrün: ${urunAd}\nAdet: ${adet}\nTahmini Hazırlık Tarihi: ${tahmini}\n\nSiparişiniz hazırlandığında tekrar bilgilendirileceğiz.\nİyi günler dileriz.`;
+
+  const waLink = tel
+    ? "https://wa.me/90"+tel.replace(/\D/g,"").replace(/^0/,"")+`?text=${encodeURIComponent(mesaj)}`
+    : `https://web.whatsapp.com/send?text=${encodeURIComponent(mesaj)}`;
+
+  const mailLink = email
+    ? `mailto:${email}?subject=Sipariş Bilgilendirme - ${sipNo}&body=${encodeURIComponent(mesaj)}`
+    : `mailto:?subject=Sipariş Bilgilendirme - ${sipNo}&body=${encodeURIComponent(mesaj)}`;
+
+  const kopyala = () => {
+    navigator.clipboard.writeText(mesaj).catch(()=>{});
+  };
+
+  return <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.7)",zIndex:500,
+    display:"flex",alignItems:"flex-end",justifyContent:"center"}}>
+    <div style={{background:C.s1,borderRadius:"20px 20px 0 0",padding:20,width:"100%",maxWidth:480,
+      border:`1px solid ${C.border}`,borderBottom:"none",maxHeight:"85vh",overflowY:"auto"}}>
+
+      <div style={{textAlign:"center",marginBottom:16}}>
+        <div style={{fontSize:36}}>🏭</div>
+        <div style={{fontSize:16,fontWeight:700,color:C.gold2,marginTop:8}}>Üretim Emri Oluşturuldu</div>
+        <div style={{fontSize:12,color:C.text3,marginTop:4}}>Stok yetersiz — sipariş üretim bekliyor</div>
+      </div>
+
+      <div style={{...C.card,background:C.s2,border:`1px solid ${C.border}`,borderRadius:12,padding:14,marginBottom:16}}>
+        <div style={{display:"grid",gap:6,fontSize:12}}>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+            <span style={{color:C.text3}}>Sipariş No</span>
+            <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:700,color:C.gold2}}>{sipNo}</span>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+            <span style={{color:C.text3}}>Müşteri</span>
+            <span style={{fontWeight:600}}>{musteriAd}</span>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+            <span style={{color:C.text3}}>Ürün</span>
+            <span>{urunAd} × {adet} adet</span>
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between",paddingTop:6,borderTop:`1px solid ${C.border}`}}>
+            <span style={{color:C.text3}}>⏰ Tahmini Tarih</span>
+            <span style={{fontWeight:700,color:C.amber}}>{tahmini}</span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{background:C.s2,border:`1px solid ${C.border}`,borderRadius:10,padding:12,
+        fontSize:11,color:C.text2,fontFamily:"'JetBrains Mono',monospace",
+        whiteSpace:"pre-line",marginBottom:16,lineHeight:1.6}}>{mesaj}</div>
+
+      <div style={{display:"grid",gap:8,marginBottom:12}}>
+        <a href={waLink} target="_blank" rel="noreferrer" style={{
+          display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+          padding:"12px 16px",background:"#25D366",borderRadius:10,
+          color:"#fff",fontWeight:700,fontSize:13,textDecoration:"none"}}>
+          <span style={{fontSize:18}}>💬</span> WhatsApp ile Gönder
+        </a>
+        <a href={mailLink} style={{
+          display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+          padding:"12px 16px",background:C.blue2,border:`1px solid rgba(106,174,214,.3)`,
+          borderRadius:10,color:C.blue,fontWeight:700,fontSize:13,textDecoration:"none"}}>
+          <span style={{fontSize:18}}>📧</span> E-posta ile Gönder
+        </a>
+        <button onClick={kopyala} style={{
+          display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+          padding:"12px 16px",background:C.s3,border:`1px solid ${C.border2}`,
+          borderRadius:10,color:C.text,fontWeight:700,fontSize:13,cursor:"pointer"}}>
+          <span style={{fontSize:18}}>📋</span> Mesajı Kopyala
+        </button>
+      </div>
+
+      <button onClick={onClose} style={{width:"100%",padding:"12px",background:"transparent",
+        border:`1px solid ${C.border2}`,borderRadius:10,color:C.text2,
+        fontWeight:600,fontSize:13,cursor:"pointer"}}>Kapat</button>
+    </div>
+  </div>;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1286,12 +1373,14 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
 // SİPARİŞ SAYFASI
 // ═══════════════════════════════════════════════════════════════
 function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
-                       nextSiparisNo, showToast, loadAll, supabase }) {
+                       uretimEmirleri, nextSiparisNo, nextEmiNo, showToast, loadAll, supabase }) {
   const [tab, setTab] = useState("liste");
   const [form, setForm] = useState({
     tarih:today(), musteri_ad:"", satis_temsilcisi:"",
-    urun_tanim_id:"", adet:"", birim_fiyat:"", notlar:""
+    urun_tanim_id:"", adet:"", birim_fiyat:"",
+    musteri_tel:"", musteri_email:"", notlar:""
   });
+  const [bildirim, setBildirim] = useState(null);
   const [saving, setSaving] = useState(false);
 
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
@@ -1299,28 +1388,67 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
   const stokAdet = seciliUrun ? nihaiStokAdet(seciliUrun.ad) : 0;
   const toplam = (parseInt(form.adet)||0)*(parseFloat(form.birim_fiyat)||0);
 
+  const tahminiUretimTarihi = () => {
+    const bekleyen = (uretimEmirleri||[]).filter(e=>e.durum==="bekliyor"||e.durum==="uretimde").length;
+    const gun = 2 + bekleyen * 2;
+    const d = new Date(); d.setDate(d.getDate() + gun);
+    return d.toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"});
+  };
+
   const kaydet = async () => {
     if(!form.musteri_ad||!form.urun_tanim_id||!form.adet){
       showToast("Müşteri, ürün ve adet zorunlu","#e07070"); return;
     }
-    if((parseInt(form.adet)||0) > stokAdet){
-      showToast("Yetersiz stok! Mevcut: "+stokAdet+" adet","#e07070"); return;
-    }
     setSaving(true);
+    const adet = parseInt(form.adet)||0;
+    const stokYeterli = adet <= stokAdet;
+    const durum = stokYeterli ? "bekliyor" : "stok_bekleniyor";
+    const sipNo = nextSiparisNo();
+
     const { error } = await supabase.from("siparisler").insert({
-      siparis_no: nextSiparisNo(), tarih: form.tarih,
+      siparis_no: sipNo, tarih: form.tarih,
       musteri_ad: form.musteri_ad, satis_temsilcisi: form.satis_temsilcisi||null,
       urun_tanim_id: form.urun_tanim_id, urun_ad: seciliUrun.ad,
       grade: seciliUrun.grade, paket_gr: seciliUrun.paket_gr,
-      adet: parseInt(form.adet), birim_fiyat: parseFloat(form.birim_fiyat)||0,
-      toplam_tutar: toplam, durum:"bekliyor", notlar: form.notlar||null
+      adet, birim_fiyat: parseFloat(form.birim_fiyat)||0,
+      toplam_tutar: toplam, durum,
+      notlar: form.notlar||null
     });
-    if(error){ showToast("Hata: "+error.message,"#e07070"); }
-    else {
+    if(error){ showToast("Hata: "+error.message,"#e07070"); setSaving(false); return; }
+
+    if(!stokYeterli) {
+      // Otomatik üretim emri oluştur
+      const eksikAdet = adet - stokAdet;
+      const hammaddeKg = Math.ceil(eksikAdet * seciliUrun.paket_gr / 1000 * 1.05 * 10) / 10;
+      await supabase.from("uretim_emirleri").insert({
+        emir_no: nextEmiNo(),
+        urun_tanim_id: seciliUrun.id,
+        urun_ad: seciliUrun.ad,
+        grade: seciliUrun.grade,
+        paket_gr: seciliUrun.paket_gr,
+        hammadde_kg: hammaddeKg,
+        hedef_adet: eksikAdet,
+        durum:"bekliyor",
+        talep_tarihi: today(),
+        notlar: "Otomatik — Sipariş: "+sipNo
+      });
+
+      // Bildirim modalı göster
+      const tahmini = tahminiUretimTarihi();
+      setBildirim({
+        sipNo, musteriAd: form.musteri_ad,
+        urunAd: seciliUrun.ad, adet,
+        tahmini,
+        tel: form.musteri_tel,
+        email: form.musteri_email
+      });
+    } else {
       showToast("✓ Sipariş kaydedildi");
-      setForm({tarih:today(),musteri_ad:"",satis_temsilcisi:"",urun_tanim_id:"",adet:"",birim_fiyat:"",notlar:""});
-      loadAll(); setTab("liste");
+      setTab("liste");
     }
+
+    setForm({tarih:today(),musteri_ad:"",satis_temsilcisi:"",urun_tanim_id:"",adet:"",birim_fiyat:"",musteri_tel:"",musteri_email:"",notlar:""});
+    loadAll();
     setSaving(false);
   };
 
@@ -1341,9 +1469,10 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
     loadAll();
   };
 
-  const dRenk = {bekliyor:[C.amber,"rgba(224,155,74,.15)"], hazirlaniyor:[C.blue,"rgba(106,174,214,.15)"],
+  const dRenk = {bekliyor:[C.amber,"rgba(224,155,74,.15)"], stok_bekleniyor:[C.purple,"rgba(167,139,250,.15)"],
+                 hazirlaniyor:[C.blue,"rgba(106,174,214,.15)"],
                  teslim_edildi:[C.green,"rgba(82,183,136,.15)"], iptal:[C.red,"rgba(224,112,112,.15)"]};
-  const dLabel = {bekliyor:"⏳ Bekliyor", hazirlaniyor:"📦 Hazırlanıyor", teslim_edildi:"✓ Teslim", iptal:"✕ İptal"};
+  const dLabel = {bekliyor:"⏳ Bekliyor", stok_bekleniyor:"🏭 Üretim Bekliyor", hazirlaniyor:"📦 Hazırlanıyor", teslim_edildi:"✓ Teslim", iptal:"✕ İptal"};
 
   const bekleyenler = siparisler.filter(si=>si.durum==="bekliyor"||si.durum==="hazirlaniyor");
   const topSatis = siparisler.filter(si=>si.durum==="teslim_edildi").reduce((a,si)=>a+si.toplam_tutar,0);
@@ -1397,8 +1526,8 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
                 {si.satis_temsilcisi&&<div>👤 {si.satis_temsilcisi}</div>}
               </div>
               {si.toplam_tutar>0&&<div style={{fontSize:14,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:C.gold2,marginBottom:8}}>{fmtTL(si.toplam_tutar)}</div>}
-              {(si.durum==="bekliyor"||si.durum==="hazirlaniyor")&&<div style={{display:"flex",gap:8}}>
-                {si.durum==="bekliyor"&&<button style={s.btnBlue} onClick={()=>durumGuncelle(si.id,"hazirlaniyor")}>📦 Hazırla</button>}
+              {(si.durum==="bekliyor"||si.durum==="stok_bekleniyor"||si.durum==="hazirlaniyor")&&<div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                {(si.durum==="bekliyor"||si.durum==="stok_bekleniyor")&&<button style={s.btnBlue} onClick={()=>durumGuncelle(si.id,"hazirlaniyor")}>📦 Hazırla</button>}
                 {si.durum==="hazirlaniyor"&&<button style={s.btnGreen} onClick={()=>durumGuncelle(si.id,"teslim_edildi")}>✓ Teslim Et</button>}
                 <button style={s.btnRed} onClick={()=>durumGuncelle(si.id,"iptal")}>İptal</button>
               </div>}
@@ -1451,7 +1580,19 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
           <span style={{fontFamily:"'JetBrains Mono',monospace",color:C.gold2}}>{fmtTL(toplam)}</span>
         </div>
       </div>}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+        <Field label="Müşteri Tel (WhatsApp)">
+          <input style={s.input} value={form.musteri_tel} onChange={e=>set("musteri_tel",e.target.value)} placeholder="05xx xxx xx xx" inputMode="tel"/>
+        </Field>
+        <Field label="Müşteri E-posta">
+          <input style={s.input} type="email" value={form.musteri_email} onChange={e=>set("musteri_email",e.target.value)} placeholder="ornek@firma.com"/>
+        </Field>
+      </div>
       <Field label="Not"><input style={s.input} value={form.notlar} onChange={e=>set("notlar",e.target.value)} placeholder="Opsiyonel..."/></Field>
+      {stokAdet < (parseInt(form.adet)||0) && form.adet && <div style={{...s.alertWarn,marginBottom:12}}>
+        <span>⚠️</span>
+        <div><strong>Stok yetersiz!</strong> Mevcut: {stokAdet} adet. Sipariş kaydedilecek ve otomatik üretim emri oluşturulacak.</div>
+      </div>}
       <button style={s.btnGold} onClick={kaydet} disabled={saving}>{saving?"Kaydediliyor...":"✓ Sipariş Kaydet"}</button>
     </div>}
 
