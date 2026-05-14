@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
+﻿import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-// ── SUPABASE BAĞLANTISI ───────────────────────────────────────
+// â”€â”€ SUPABASE BAÄLANTISI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Supabase kurulumundan sonra buraya kendi bilgilerinizi girin
 const SUPABASE_URL = "https://pfguxmffclwpjtunablp.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Oi6H33RJ-n-ezrn0tm5vRQ_pYgAM7H8";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ── RENK PALETİ ───────────────────────────────────────────────
+// â”€â”€ RENK PALETÄ° â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const C = {
   bg:"#0c0b09", s1:"#161410", s2:"#1f1c16", s3:"#2a261d",
   border:"#332e22", border2:"#44402f",
@@ -23,15 +23,15 @@ const C = {
 const GC = { "Grade 1":C.g1, "Grade 2":C.g2, "Grade 3":C.g3, "Hurda":C.gh };
 const GRADES = ["Grade 1","Grade 2","Grade 3","Hurda"];
 
-// ── YARDIMCI FONKSİYONLAR ────────────────────────────────────
-const fmt = (n,d=2) => isNaN(n)||n==null?"—": (+n).toLocaleString("tr-TR",{minimumFractionDigits:d,maximumFractionDigits:d});
+// â”€â”€ YARDIMCI FONKSÄ°YONLAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+const fmt = (n,d=2) => isNaN(n)||n==null?"â€”": (+n).toLocaleString("tr-TR",{minimumFractionDigits:d,maximumFractionDigits:d});
 const fmtK = n => fmt(n,1)+" kg";
-const fmtTL = n => "₺"+fmt(n,2);
+const fmtTL = n => "â‚º"+fmt(n,2);
 const today = () => new Date().toISOString().split("T")[0];
 const thisMonth = () => new Date().toISOString().slice(0,7);
 const daysDiff = d => Math.floor((new Date()-new Date(d))/86400000);
 
-// ── CSS GLOBAL ────────────────────────────────────────────────
+// â”€â”€ CSS GLOBAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const globalCSS = `
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -43,7 +43,7 @@ input,select,textarea{font-family:'Sora',sans-serif}
 @media print{body>*:not(#print-area){display:none!important}#print-area{display:block!important}}
 `;
 
-// ── BASE COMPONENTS ───────────────────────────────────────────
+// â”€â”€ BASE COMPONENTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const s = {
   // Layout
   app: { display:"flex", flexDirection:"column", height:"100vh", overflow:"hidden" },
@@ -138,11 +138,11 @@ function GradePill({ grade }) {
 
 // Status badge
 function StatusBadge({ durum }) {
-  const map = { bekliyor:[C.amber,"rgba(224,155,74,.15)","rgba(224,155,74,.3)","⏳ Bekliyor"],
-                tamam:   [C.green,"rgba(82,183,136,.15)","rgba(82,183,136,.3)","✓ Tamam"],
-                uretimde:[C.blue,"rgba(106,174,214,.15)","rgba(106,174,214,.3)","⚙ Üretimde"],
-                tamamlandi:[C.green,"rgba(82,183,136,.15)","rgba(82,183,136,.3)","✓ Tamamlandı"],
-                iptal:   [C.red,"rgba(224,112,112,.15)","rgba(224,112,112,.3)","✕ İptal"] };
+  const map = { bekliyor:[C.amber,"rgba(224,155,74,.15)","rgba(224,155,74,.3)","â³ Bekliyor"],
+                tamam:   [C.green,"rgba(82,183,136,.15)","rgba(82,183,136,.3)","âœ“ Tamam"],
+                uretimde:[C.blue,"rgba(106,174,214,.15)","rgba(106,174,214,.3)","âš™ Ãœretimde"],
+                tamamlandi:[C.green,"rgba(82,183,136,.15)","rgba(82,183,136,.3)","âœ“ TamamlandÄ±"],
+                iptal:   [C.red,"rgba(224,112,112,.15)","rgba(224,112,112,.3)","âœ• Ä°ptal"] };
   const [fg,bg,br,label] = map[durum]||[C.text3,C.s2,C.border,durum];
   return <span style={{display:"inline-block",padding:"3px 9px",borderRadius:20,fontSize:10,
     fontWeight:600,fontFamily:"'JetBrains Mono',monospace",color:fg,background:bg,border:`1px solid ${br}`}}>{label}</span>;
@@ -165,9 +165,9 @@ function Toast({ msg, color }) {
     animation:"fadeInUp 0.25s ease"}}>{msg}</div>;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // ANA UYGULAMA
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 export default function App() {
   const [page, setPage] = useState("dash");
   const [toast, setToast] = useState(null);
@@ -181,20 +181,22 @@ export default function App() {
   const [urunTanimlari, setUrunTanimlari] = useState([]);
   const [uretimEmirleri,setUretimEmirleri]= useState([]);
   const [uretimKayitlari,setUretimKayitlari]=useState([]);
-  const [nihalStok,     setNihaiStok]     = useState([]);
-  const [giderler,      setGiderler]      = useState([]);
-  const [hamStokOzet,   setHamStokOzet]   = useState([]);
+  const [nihalStok,       setNihaiStok]       = useState([]);
+  const [giderler,        setGiderler]        = useState([]);
+  const [hamStokOzet,     setHamStokOzet]     = useState([]);
+  const [siparisler,      setSiparisler]      = useState([]);
+  const [satisTem,        setSatisTem]        = useState([]);
 
   const showToast = (msg, color=C.green) => {
     setToast({msg,color});
     setTimeout(()=>setToast(null), 2800);
   };
 
-  // Tüm veriyi yükle
+  // TÃ¼m veriyi yÃ¼kle
   const loadAll = useCallback(async () => {
     setLoading(true);
     try {
-      const [c,g,a,ck,ut,ue,uk,ns,gd,hs] = await Promise.all([
+      const [c,g,a,ck,ut,ue,uk,ns,gd,hs,sp,st] = await Promise.all([
         supabase.from("ciftciler").select("*").eq("aktif",true).order("ad"),
         supabase.from("girisler").select("*").order("tarih",{ascending:false}).order("created_at",{ascending:false}),
         supabase.from("ayristirmalar").select("*").order("tarih",{ascending:false}),
@@ -205,6 +207,8 @@ export default function App() {
         supabase.from("nihai_stok").select("*").order("created_at",{ascending:false}),
         supabase.from("giderler").select("*").order("ay",{ascending:false}),
         supabase.from("ham_stok_ozet").select("*"),
+        supabase.from("siparisler").select("*").order("created_at",{ascending:false}),
+        supabase.from("satis_temsilcileri").select("*").eq("aktif",true).order("ad"),
       ]);
       setCiftciler(c.data||[]);
       setGirisler(g.data||[]);
@@ -216,13 +220,15 @@ export default function App() {
       setNihaiStok(ns.data||[]);
       setGiderler(gd.data||[]);
       setHamStokOzet(hs.data||[]);
-    } catch(e) { showToast("Bağlantı hatası: "+e.message, C.red); }
+      setSiparisler(sp.data||[]);
+      setSatisTem(st.data||[]);
+    } catch(e) { showToast("BaÄŸlantÄ± hatasÄ±: "+e.message, C.red); }
     setLoading(false);
   }, []);
 
   useEffect(()=>{ loadAll(); }, [loadAll]);
 
-  // Realtime aboneliği
+  // Realtime aboneliÄŸi
   useEffect(()=>{
     const ch = supabase.channel("changes")
       .on("postgres_changes",{event:"*",schema:"public"},()=>loadAll())
@@ -247,13 +253,21 @@ export default function App() {
     return "URE-"+String(max+1).padStart(4,"0");
   };
 
-  // Ham stok hesabı
+  const nextSiparisNo = () => {
+    const max = siparisler.reduce((a,s)=>{
+      const n = parseInt(s.siparis_no?.replace("SIP-",""))||0;
+      return Math.max(a,n);
+    },0);
+    return "SIP-"+String(max+1).padStart(4,"0");
+  };
+
+  // Ham stok hesabÄ±
   const hamStok = (grade) => {
     const row = hamStokOzet.find(r=>r.grade===grade);
     return row ? (row.net_stok||0) : 0;
   };
 
-  // Nihai ürün stok
+  // Nihai Ã¼rÃ¼n stok
   const nihaiStokAdet = (urunAd) => {
     const girisAdet = nihalStok.filter(r=>r.urun_ad===urunAd&&r.hareket_tipi==="giris").reduce((s,r)=>s+r.adet,0);
     const cikisAdet = nihalStok.filter(r=>r.urun_ad===urunAd&&r.hareket_tipi==="cikis").reduce((s,r)=>s+r.adet,0);
@@ -262,16 +276,18 @@ export default function App() {
 
   const props = { ciftciler, girisler, ayristirmalar, cikislar, urunTanimlari,
                   uretimEmirleri, uretimKayitlari, nihalStok, giderler, hamStokOzet,
-                  hamStok, nihaiStokAdet, nextSevkNo, nextEmiNo,
+                  siparisler, satisTem,
+                  hamStok, nihaiStokAdet, nextSevkNo, nextEmiNo, nextSiparisNo,
                   showToast, loadAll, supabase, setPage, loading };
 
   const navItems = [
-    {id:"dash",   icon:"📊", label:"Özet"},
-    {id:"giris",  icon:"🚪", label:"Giriş"},
-    {id:"ayrist", icon:"⚖️", label:"Ayırt"},
-    {id:"uretim", icon:"🏭", label:"Üretim"},
-    {id:"stok",   icon:"📦", label:"Stok"},
-    {id:"rapor",  icon:"📈", label:"Rapor"},
+    {id:"dash",    icon:"ğŸ“Š", label:"Ã–zet"},
+    {id:"giris",   icon:"ğŸšª", label:"GiriÅŸ"},
+    {id:"ayrist",  icon:"âš–ï¸", label:"AyÄ±rt"},
+    {id:"uretim",  icon:"ğŸ­", label:"Ãœretim"},
+    {id:"stok",    icon:"ğŸ“¦", label:"Stok"},
+    {id:"siparis", icon:"ğŸ›’", label:"SipariÅŸ"},
+    {id:"rapor",   icon:"ğŸ“ˆ", label:"Rapor"},
   ];
 
   return <>
@@ -280,11 +296,11 @@ export default function App() {
       {/* TOPBAR */}
       <div style={s.topbar}>
         <div style={s.brand}>
-          <div style={s.logo}>🌿</div>
+          <div style={s.logo}>ğŸŒ¿</div>
           <div>
-            <div style={{fontSize:15,fontWeight:700,color:C.gold2}}>İncir Fabrikası</div>
+            <div style={{fontSize:15,fontWeight:700,color:C.gold2}}>Ä°ncir FabrikasÄ±</div>
             <div style={{fontSize:10,color:C.text3,fontFamily:"'JetBrains Mono',monospace"}}>
-              {loading?"Yükleniyor...":new Date().toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"})}
+              {loading?"YÃ¼kleniyor...":new Date().toLocaleDateString("tr-TR",{day:"numeric",month:"long",weekday:"short"})}
             </div>
           </div>
         </div>
@@ -292,7 +308,7 @@ export default function App() {
           <div style={{width:8,height:8,borderRadius:"50%",background:loading?C.amber:C.green,
             boxShadow:`0 0 6px ${loading?C.amber:C.green}`}}/>
           <span style={{fontSize:10,color:C.text3,fontFamily:"'JetBrains Mono',monospace"}}>
-            {loading?"Senkronize":"Bağlı"}
+            {loading?"Senkronize":"BaÄŸlÄ±"}
           </span>
         </div>
       </div>
@@ -300,12 +316,13 @@ export default function App() {
       {/* MAIN */}
       <div style={s.main} id="mainScroll">
         <div style={s.page}>
-          {page==="dash"   && <DashPage   {...props}/>}
-          {page==="giris"  && <GirisPage  {...props}/>}
-          {page==="ayrist" && <AyristPage {...props}/>}
-          {page==="uretim" && <UretimPage {...props}/>}
-          {page==="stok"   && <StokPage   {...props}/>}
-          {page==="rapor"  && <RaporPage  {...props}/>}
+          {page==="dash"    && <DashPage    {...props}/>}
+          {page==="giris"   && <GirisPage   {...props}/>}
+          {page==="ayrist"  && <AyristPage  {...props}/>}
+          {page==="uretim"  && <UretimPage  {...props}/>}
+          {page==="stok"    && <StokPage    {...props}/>}
+          {page==="siparis" && <SiparisPage {...props}/>}
+          {page==="rapor"   && <RaporPage   {...props}/>}
         </div>
       </div>
 
@@ -325,9 +342,9 @@ export default function App() {
   </>;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // DASHBOARD
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function DashPage({ hamStok, hamStokOzet, uretimEmirleri, nihalStok, nihaiStokAdet,
                     girisler, ayristirmalar, giderler, urunTanimlari, setPage }) {
   const topHamStok = GRADES.reduce((a,g)=>a+hamStok(g),0);
@@ -336,12 +353,12 @@ function DashPage({ hamStok, hamStokOzet, uretimEmirleri, nihalStok, nihaiStokAd
   const ayGider = giderler.filter(g=>g.ay===thisMonth()).reduce((a,x)=>a+x.tutar,0);
 
   return <>
-    {/* KPI Satırı */}
+    {/* KPI SatÄ±rÄ± */}
     <div style={s.kpiRow}>
       {[
         {l:"Ham Stok", v:fmt(topHamStok,1), u:"kg"},
-        {l:"Ayırt Bekleyen", v:bekleyenAyrist, u:"sevk"},
-        {l:"Üretim Bekleyen", v:bekleyenUretim, u:"emir"},
+        {l:"AyÄ±rt Bekleyen", v:bekleyenAyrist, u:"sevk"},
+        {l:"Ãœretim Bekleyen", v:bekleyenUretim, u:"emir"},
         {l:"Bu Ay Gider", v:fmtTL(ayGider), u:""},
       ].map(k=>(
         <div key={k.l} style={s.kpi}>
@@ -352,23 +369,23 @@ function DashPage({ hamStok, hamStokOzet, uretimEmirleri, nihalStok, nihaiStokAd
       ))}
     </div>
 
-    {/* Uyarılar */}
+    {/* UyarÄ±lar */}
     {bekleyenAyrist>0 && <div style={s.alertInfo}>
-      <span>⚖️</span>
-      <div><strong>{bekleyenAyrist} sevkiyat ayrıştırma bekliyor</strong>
-        <div style={{cursor:"pointer",textDecoration:"underline"}} onClick={()=>setPage("ayrist")}>Ayrıştırmaya git →</div>
+      <span>âš–ï¸</span>
+      <div><strong>{bekleyenAyrist} sevkiyat ayrÄ±ÅŸtÄ±rma bekliyor</strong>
+        <div style={{cursor:"pointer",textDecoration:"underline"}} onClick={()=>setPage("ayrist")}>AyrÄ±ÅŸtÄ±rmaya git â†’</div>
       </div>
     </div>}
     {bekleyenUretim>0 && <div style={s.alertWarn}>
-      <span>🏭</span>
-      <div><strong>{bekleyenUretim} üretim emri onay bekliyor</strong>
-        <div style={{cursor:"pointer",textDecoration:"underline"}} onClick={()=>setPage("uretim")}>Üretime git →</div>
+      <span>ğŸ­</span>
+      <div><strong>{bekleyenUretim} Ã¼retim emri onay bekliyor</strong>
+        <div style={{cursor:"pointer",textDecoration:"underline"}} onClick={()=>setPage("uretim")}>Ãœretime git â†’</div>
       </div>
     </div>}
 
-    {/* Ham Stok Grade Barları */}
+    {/* Ham Stok Grade BarlarÄ± */}
     <div style={{...s.card}}>
-      <div style={s.cardTitle}>📦 Ham Stok (Ayrıştırılmış)</div>
+      <div style={s.cardTitle}>ğŸ“¦ Ham Stok (AyrÄ±ÅŸtÄ±rÄ±lmÄ±ÅŸ)</div>
       {GRADES.map(g=>{
         const net = hamStok(g);
         const max = Math.max(...GRADES.map(x=>hamStok(x)),1);
@@ -385,11 +402,11 @@ function DashPage({ hamStok, hamStokOzet, uretimEmirleri, nihalStok, nihaiStokAd
       })}
     </div>
 
-    {/* Nihai Ürün Özeti */}
+    {/* Nihai ÃœrÃ¼n Ã–zeti */}
     <div style={s.card}>
-      <div style={s.cardTitle}>📦 Nihai Ürün Stoku</div>
+      <div style={s.cardTitle}>ğŸ“¦ Nihai ÃœrÃ¼n Stoku</div>
       {urunTanimlari.length===0
-        ? <div style={{fontSize:12,color:C.text3,textAlign:"center",padding:16}}>Henüz üretim yok</div>
+        ? <div style={{fontSize:12,color:C.text3,textAlign:"center",padding:16}}>HenÃ¼z Ã¼retim yok</div>
         : <div style={{display:"grid",gap:6}}>
             {urunTanimlari.map(u=>{
               const adet = nihaiStokAdet(u.ad);
@@ -409,9 +426,9 @@ function DashPage({ hamStok, hamStokOzet, uretimEmirleri, nihalStok, nihaiStokAd
   </>;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// ANA GİRİŞ
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ANA GÄ°RÄ°Å
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function GirisPage({ ciftciler, girisler, nextSevkNo, showToast, loadAll, supabase }) {
   const [form, setForm] = useState({ ciftci_ad:"", tarih:today(), plaka:"", kg:"", fiyat:"", notlar:"" });
   const [saving, setSaving] = useState(false);
@@ -420,12 +437,12 @@ function GirisPage({ ciftciler, girisler, nextSevkNo, showToast, loadAll, supaba
   const toplam = (parseFloat(form.kg)||0) * (parseFloat(form.fiyat)||0);
 
   const kaydet = async () => {
-    if(!form.ciftci_ad||!form.tarih||!form.kg){ showToast("Çiftçi, tarih ve KG zorunlu","#e07070"); return; }
+    if(!form.ciftci_ad||!form.tarih||!form.kg){ showToast("Ã‡iftÃ§i, tarih ve KG zorunlu","#e07070"); return; }
     setSaving(true);
     const sevk_no = nextSevkNo();
     const ciftci = ciftciler.find(c=>c.ad===form.ciftci_ad);
 
-    // Çiftçi yoksa ekle
+    // Ã‡iftÃ§i yoksa ekle
     if(!ciftci && form.ciftci_ad){
       await supabase.from("ciftciler").insert({ad:form.ciftci_ad, plaka:form.plaka});
     }
@@ -440,7 +457,7 @@ function GirisPage({ ciftciler, girisler, nextSevkNo, showToast, loadAll, supaba
 
     if(error){ showToast("Hata: "+error.message,"#e07070"); }
     else {
-      showToast(`✓ ${sevk_no} kaydedildi`);
+      showToast(`âœ“ ${sevk_no} kaydedildi`);
       setForm({ciftci_ad:"",tarih:today(),plaka:"",kg:"",fiyat:"",notlar:""});
       loadAll();
     }
@@ -448,12 +465,12 @@ function GirisPage({ ciftciler, girisler, nextSevkNo, showToast, loadAll, supaba
   };
 
   return <>
-    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>🚪 Ana Giriş</div>
+    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>ğŸšª Ana GiriÅŸ</div>
 
     <div style={s.card}>
-      <div style={s.cardTitle}>➕ Yeni Sevkiyat</div>
+      <div style={s.cardTitle}>â• Yeni Sevkiyat</div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-        <Field label="Çiftçi">
+        <Field label="Ã‡iftÃ§i">
           <input style={s.input} value={form.ciftci_ad} list="ciftciList"
             onChange={e=>set("ciftci_ad",e.target.value)} placeholder="Ad Soyad..."/>
           <datalist id="ciftciList">{ciftciler.map(c=><option key={c.id} value={c.ad}/>)}</datalist>
@@ -467,32 +484,32 @@ function GirisPage({ ciftciler, girisler, nextSevkNo, showToast, loadAll, supaba
         <Field label="Toplam KG">
           <input style={s.input} type="number" value={form.kg} onChange={e=>set("kg",e.target.value)} placeholder="0.0" inputMode="decimal"/>
         </Field>
-        <Field label="₺/KG">
+        <Field label="â‚º/KG">
           <input style={s.input} type="number" value={form.fiyat} onChange={e=>set("fiyat",e.target.value)} placeholder="0.00" inputMode="decimal"/>
         </Field>
-        <Field label="Toplam ₺">
+        <Field label="Toplam â‚º">
           <input style={{...s.input,color:C.text2}} value={toplam>0?fmtTL(toplam):""} readOnly placeholder="Otomatik"/>
         </Field>
       </div>
       <Field label="Not"><input style={s.input} value={form.notlar} onChange={e=>set("notlar",e.target.value)} placeholder="Opsiyonel..."/></Field>
       <button style={s.btnGold} onClick={kaydet} disabled={saving}>
-        {saving?"Kaydediliyor...":"✓ Kaydet & Fiş Yaz"}
+        {saving?"Kaydediliyor...":"âœ“ Kaydet & FiÅŸ Yaz"}
       </button>
     </div>
 
     <div style={{fontSize:11,color:C.text3,fontFamily:"'JetBrains Mono',monospace",
-      textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Kayıtlar</div>
+      textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>KayÄ±tlar</div>
     <div style={s.card}>
       <div style={s.tscroll}>
         <table style={s.table}>
           <thead><tr>
-            <th style={s.th}>Sevk No</th><th style={s.th}>Çiftçi</th>
+            <th style={s.th}>Sevk No</th><th style={s.th}>Ã‡iftÃ§i</th>
             <th style={s.th}>Tarih</th><th style={s.th}>KG</th>
             <th style={s.th}>Tutar</th><th style={s.th}>Durum</th>
           </tr></thead>
           <tbody>
             {girisler.length===0
-              ? <tr><td style={{...s.td,textAlign:"center",color:C.text3}} colSpan={6}>Kayıt yok</td></tr>
+              ? <tr><td style={{...s.td,textAlign:"center",color:C.text3}} colSpan={6}>KayÄ±t yok</td></tr>
               : girisler.map(g=><tr key={g.id}>
                   <td style={s.td}><span style={s.lotTag}>{g.sevk_no}</span></td>
                   <td style={{...s.td,fontSize:12}}>{g.ciftci_ad}</td>
@@ -509,9 +526,9 @@ function GirisPage({ ciftciler, girisler, nextSevkNo, showToast, loadAll, supaba
   </>;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// KALİTE AYRIŞTIRMA
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// KALÄ°TE AYRIÅTIRMA
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
   const [activeId, setActiveId] = useState(null);
   const [form, setForm] = useState({g1:"",g2:"",g3:"",gh:"",fire:"",fire_not:""});
@@ -532,7 +549,7 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
 
   const kaydet = async () => {
     if(!activeGiris) return;
-    if(!dengeOk){ showToast(`Toplam eşleşmiyor! Fark: ${fmt(fark,2)} kg`,"#e07070"); return; }
+    if(!dengeOk){ showToast(`Toplam eÅŸleÅŸmiyor! Fark: ${fmt(fark,2)} kg`,"#e07070"); return; }
 
     const { error: e1 } = await supabase.from("ayristirmalar").insert({
       giris_id: activeGiris.id, sevk_no: activeGiris.sevk_no,
@@ -545,22 +562,22 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
     const { error: e2 } = await supabase.from("girisler").update({durum:"tamam"}).eq("id",activeGiris.id);
     if(e2){ showToast("Hata: "+e2.message,"#e07070"); return; }
 
-    showToast(`✓ ${activeGiris.sevk_no} ayrıştırıldı`);
+    showToast(`âœ“ ${activeGiris.sevk_no} ayrÄ±ÅŸtÄ±rÄ±ldÄ±`);
     setActiveId(null);
     setForm({g1:"",g2:"",g3:"",gh:"",fire:"",fire_not:""});
     loadAll();
   };
 
   return <>
-    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>⚖️ Kalite Ayrıştırma</div>
+    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>âš–ï¸ Kalite AyrÄ±ÅŸtÄ±rma</div>
 
     {/* Bekleyenler */}
     <div style={{fontSize:11,color:C.text3,fontFamily:"'JetBrains Mono',monospace",
       textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>
-      Ayrıştırma Bekleyenler ({bekleyenler.length})
+      AyrÄ±ÅŸtÄ±rma Bekleyenler ({bekleyenler.length})
     </div>
     {bekleyenler.length===0
-      ? <div style={{...s.alertOk,marginBottom:12}}><span>✅</span><div>Tüm sevkiyatlar ayrıştırıldı!</div></div>
+      ? <div style={{...s.alertOk,marginBottom:12}}><span>âœ…</span><div>TÃ¼m sevkiyatlar ayrÄ±ÅŸtÄ±rÄ±ldÄ±!</div></div>
       : bekleyenler.map(g=>(
           <div key={g.id} style={{...s.card, borderColor: activeId===g.id?C.gold3:C.border,
             cursor:"pointer"}} onClick={()=>{ setActiveId(g.id); setForm({g1:"",g2:"",g3:"",gh:"",fire:"",fire_not:""}); }}>
@@ -572,18 +589,18 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
               <StatusBadge durum="bekliyor"/>
             </div>
             <div style={{display:"flex",gap:16,fontSize:12,color:C.text2}}>
-              <span>📅 {g.tarih}</span>
-              <span style={s.mono}>⚖️ {fmt(g.kg,1)} kg</span>
-              {g.plaka&&<span>🚛 {g.plaka}</span>}
+              <span>ğŸ“… {g.tarih}</span>
+              <span style={s.mono}>âš–ï¸ {fmt(g.kg,1)} kg</span>
+              {g.plaka&&<span>ğŸš› {g.plaka}</span>}
             </div>
-            {activeId===g.id&&<div style={{marginTop:8,fontSize:11,color:C.gold}}>▼ Aşağıda formu doldurun</div>}
+            {activeId===g.id&&<div style={{marginTop:8,fontSize:11,color:C.gold}}>â–¼ AÅŸaÄŸÄ±da formu doldurun</div>}
           </div>
         ))
     }
 
-    {/* Ayrıştırma Formu */}
+    {/* AyrÄ±ÅŸtÄ±rma Formu */}
     {activeGiris && <div style={{...s.card,borderColor:C.gold3}}>
-      <div style={s.cardTitle}>⚖️ {activeGiris.sevk_no} — {activeGiris.ciftci_ad} — {fmt(activeGiris.kg,1)} kg</div>
+      <div style={s.cardTitle}>âš–ï¸ {activeGiris.sevk_no} â€” {activeGiris.ciftci_ad} â€” {fmt(activeGiris.kg,1)} kg</div>
 
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
         {[["Grade 1",C.g1,"g1"],["Grade 2",C.g2,"g2"],["Grade 3",C.g3,"g3"],["Hurda",C.gh,"gh"]].map(([lbl,col,key])=>(
@@ -597,11 +614,11 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
       </div>
 
       <div style={{display:"grid",gridTemplateColumns:"1fr 2fr",gap:8,marginBottom:12}}>
-        <Field label="🔥 Fire (kg)">
+        <Field label="ğŸ”¥ Fire (kg)">
           <input style={s.input} type="number" value={form.fire} onChange={e=>set("fire",e.target.value)} placeholder="0" inputMode="decimal"/>
         </Field>
         <Field label="Fire Notu">
-          <input style={s.input} value={form.fire_not} onChange={e=>set("fire_not",e.target.value)} placeholder="nem, çürük..."/>
+          <input style={s.input} value={form.fire_not} onChange={e=>set("fire_not",e.target.value)} placeholder="nem, Ã§Ã¼rÃ¼k..."/>
         </Field>
       </div>
 
@@ -618,8 +635,8 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
       </div>
 
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-        <button style={s.btnOutline} onClick={()=>setActiveId(null)}>İptal</button>
-        <button style={{...s.btnGold,opacity:dengeOk?1:0.5}} onClick={kaydet} disabled={!dengeOk}>✓ Kaydet</button>
+        <button style={s.btnOutline} onClick={()=>setActiveId(null)}>Ä°ptal</button>
+        <button style={{...s.btnGold,opacity:dengeOk?1:0.5}} onClick={kaydet} disabled={!dengeOk}>âœ“ Kaydet</button>
       </div>
     </div>}
 
@@ -632,10 +649,10 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
       <div style={s.tscroll}>
         <table style={{...s.table,minWidth:700}}>
           <thead><tr>
-            <th style={s.th}>Sevk No</th><th style={s.th}>Çiftçi</th>
-            <th style={s.th}>Giriş KG</th><th style={s.th}>G1</th>
+            <th style={s.th}>Sevk No</th><th style={s.th}>Ã‡iftÃ§i</th>
+            <th style={s.th}>GiriÅŸ KG</th><th style={s.th}>G1</th>
             <th style={s.th}>G2</th><th style={s.th}>G3</th>
-            <th style={s.th}>Hurda</th><th style={s.th}>Fire</th><th style={s.th}>✓</th>
+            <th style={s.th}>Hurda</th><th style={s.th}>Fire</th><th style={s.th}>âœ“</th>
           </tr></thead>
           <tbody>
             {tamamlananlar.map(a=>{
@@ -649,8 +666,8 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
                 <td style={{...s.td,...s.mono,color:C.g2}}>{fmt(a.g2,1)}</td>
                 <td style={{...s.td,...s.mono,color:C.g3}}>{fmt(a.g3,1)}</td>
                 <td style={{...s.td,...s.mono,color:C.gh}}>{fmt(a.gh,1)}</td>
-                <td style={{...s.td,...s.mono,color:a.fire>0?C.red:C.text3}}>{a.fire>0?fmt(a.fire,1):"—"}</td>
-                <td style={s.td}><span style={{color:ok?C.green:C.red,fontSize:14}}>{ok?"✓":"⚠"}</span></td>
+                <td style={{...s.td,...s.mono,color:a.fire>0?C.red:C.text3}}>{a.fire>0?fmt(a.fire,1):"â€”"}</td>
+                <td style={s.td}><span style={{color:ok?C.green:C.red,fontSize:14}}>{ok?"âœ“":"âš "}</span></td>
               </tr>;
             })}
           </tbody>
@@ -660,9 +677,9 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
   </>;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// ÜRETİM SAYFASI
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// ÃœRETÄ°M SAYFASI
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
                       hamStok, nihaiStokAdet, nextEmiNo, showToast, loadAll, supabase }) {
   const [tab, setTab] = useState("emirler"); // emirler | kayitlar | urunler
@@ -675,13 +692,13 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
   });
   const [saving, setSaving] = useState(false);
 
-  // Seçili ürün tanımı
+  // SeÃ§ili Ã¼rÃ¼n tanÄ±mÄ±
   const seciliUrun = urunTanimlari.find(u=>u.id===emirForm.urun_tanim_id);
   const hedefAdet = seciliUrun && emirForm.hammadde_kg
     ? Math.floor((parseFloat(emirForm.hammadde_kg)||0)*1000/(seciliUrun.paket_gr||1))
     : 0;
 
-  // Seçili üretim emri (kayıt için)
+  // SeÃ§ili Ã¼retim emri (kayÄ±t iÃ§in)
   const seciliEmir = uretimEmirleri.find(e=>e.id===kayitForm.uretim_emri_id);
   const uretimNet = kayitForm.uretilen_adet && seciliEmir
     ? (parseInt(kayitForm.uretilen_adet)||0)*seciliEmir.paket_gr/1000
@@ -689,7 +706,7 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
 
   const emirKaydet = async () => {
     if(!emirForm.urun_tanim_id||!emirForm.hammadde_kg){
-      showToast("Ürün ve hammadde zorunlu","#e07070"); return;
+      showToast("ÃœrÃ¼n ve hammadde zorunlu","#e07070"); return;
     }
     const urun = urunTanimlari.find(u=>u.id===emirForm.urun_tanim_id);
     const stok = hamStok(urun?.grade||"");
@@ -711,7 +728,7 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
     });
     if(error){ showToast("Hata: "+error.message,"#e07070"); }
     else {
-      showToast("✓ Üretim emri oluşturuldu");
+      showToast("âœ“ Ãœretim emri oluÅŸturuldu");
       setEmirForm({urun_tanim_id:"",hammadde_kg:"",notlar:"",talep_tarihi:today()});
       loadAll();
     }
@@ -720,10 +737,10 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
 
   const uretimKaydet = async () => {
     if(!kayitForm.uretim_emri_id||!kayitForm.kullanilan_kg||!kayitForm.uretilen_adet){
-      showToast("Tüm alanlar zorunlu","#e07070"); return;
+      showToast("TÃ¼m alanlar zorunlu","#e07070"); return;
     }
     const emir = uretimEmirleri.find(e=>e.id===kayitForm.uretim_emri_id);
-    if(!emir){ showToast("Emir bulunamadı","#e07070"); return; }
+    if(!emir){ showToast("Emir bulunamadÄ±","#e07070"); return; }
 
     setSaving(true);
     const kulKg = parseFloat(kayitForm.kullanilan_kg);
@@ -732,7 +749,7 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
     const uretKg = uretAdet*emir.paket_gr/1000;
     const partiNo = emir.emir_no+"-P"+(uretimKayitlari.filter(k=>k.uretim_emri_id===emir.id).length+1);
 
-    // 1. Üretim kaydı oluştur
+    // 1. Ãœretim kaydÄ± oluÅŸtur
     const { data: ukData, error: e1 } = await supabase.from("uretim_kayitlari").insert({
       uretim_emri_id: emir.id, emir_no: emir.emir_no,
       urun_ad: emir.urun_ad, grade: emir.grade, paket_gr: emir.paket_gr,
@@ -743,26 +760,26 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
     }).select().single();
     if(e1){ showToast("Hata: "+e1.message,"#e07070"); setSaving(false); return; }
 
-    // 2. Ham stoktan çıkış
+    // 2. Ham stoktan Ã§Ä±kÄ±ÅŸ
     await supabase.from("cikislar").insert({
       grade: emir.grade, kg: kulKg, tarih: kayitForm.uretim_tarihi,
-      sebep:"Üretime Gönderildi", notlar:`${emir.emir_no} — ${emir.urun_ad}`,
+      sebep:"Ãœretime GÃ¶nderildi", notlar:`${emir.emir_no} â€” ${emir.urun_ad}`,
       uretim_emri_id: emir.id
     });
 
-    // 3. Nihai ürün stoğuna giriş
+    // 3. Nihai Ã¼rÃ¼n stoÄŸuna giriÅŸ
     await supabase.from("nihai_stok").insert({
       urun_tanim_id: emir.urun_tanim_id, urun_ad: emir.urun_ad,
       grade: emir.grade, paket_gr: emir.paket_gr,
       hareket_tipi:"giris", adet: uretAdet, kg: uretKg,
-      tarih: kayitForm.uretim_tarihi, sebep:"Üretim",
+      tarih: kayitForm.uretim_tarihi, sebep:"Ãœretim",
       referans_id: ukData.id, notlar: partiNo
     });
 
-    // 4. Emri tamamlandı olarak işaretle
+    // 4. Emri tamamlandÄ± olarak iÅŸaretle
     await supabase.from("uretim_emirleri").update({durum:"tamamlandi"}).eq("id",emir.id);
 
-    showToast(`✓ ${partiNo} üretim tamamlandı — ${uretAdet} adet`);
+    showToast(`âœ“ ${partiNo} Ã¼retim tamamlandÄ± â€” ${uretAdet} adet`);
     setKayitForm({uretim_emri_id:"",kullanilan_kg:"",uretilen_adet:"",fire_kg:"0",uretim_tarihi:today(),notlar:""});
     loadAll();
     setSaving(false);
@@ -770,33 +787,33 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
 
   const emirOnayla = async (id) => {
     await supabase.from("uretim_emirleri").update({durum:"uretimde"}).eq("id",id);
-    showToast("✓ Emir üretime alındı");
+    showToast("âœ“ Emir Ã¼retime alÄ±ndÄ±");
     loadAll();
   };
 
   return <>
-    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>🏭 Üretim</div>
+    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>ğŸ­ Ãœretim</div>
 
     {/* Tab Bar */}
     <div style={{display:"flex",gap:4,marginBottom:16,background:C.s2,padding:4,borderRadius:8,width:"fit-content"}}>
-      {[["emirler","📋 Emirler"],["kayitlar","⚙️ Üret"],["urunler","📦 Ürünler"]].map(([id,lbl])=>(
+      {[["emirler","ğŸ“‹ Emirler"],["kayitlar","âš™ï¸ Ãœret"],["urunler","ğŸ“¦ ÃœrÃ¼nler"]].map(([id,lbl])=>(
         <button key={id} onClick={()=>setTab(id)} style={{padding:"7px 14px",background:tab===id?C.s1:"transparent",
           border:"none",borderRadius:6,color:tab===id?C.gold2:C.text3,fontFamily:"'Sora',sans-serif",
           fontSize:12,fontWeight:500,cursor:"pointer"}}>{lbl}</button>
       ))}
     </div>
 
-    {/* ── TAB: ÜRETİM EMİRLERİ ── */}
+    {/* â”€â”€ TAB: ÃœRETÄ°M EMÄ°RLERÄ° â”€â”€ */}
     {tab==="emirler" && <>
       <div style={s.card}>
-        <div style={s.cardTitle}>➕ Yeni Üretim Emri</div>
-        <Field label="Ürün Seç">
+        <div style={s.cardTitle}>â• Yeni Ãœretim Emri</div>
+        <Field label="ÃœrÃ¼n SeÃ§">
           <select style={s.select} value={emirForm.urun_tanim_id}
             onChange={e=>setEmirForm(f=>({...f,urun_tanim_id:e.target.value,hammadde_kg:""}))}>
-            <option value="">-- Ürün Seçin --</option>
+            <option value="">-- ÃœrÃ¼n SeÃ§in --</option>
             {urunTanimlari.map(u=>(
               <option key={u.id} value={u.id}>
-                {u.ad} ({u.grade}) — Stok: {fmt(hamStok(u.grade),1)} kg
+                {u.ad} ({u.grade}) â€” Stok: {fmt(hamStok(u.grade),1)} kg
               </option>
             ))}
           </select>
@@ -811,14 +828,14 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
             </div>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-            <Field label="Kullanılacak KG">
+            <Field label="KullanÄ±lacak KG">
               <input style={s.input} type="number" value={emirForm.hammadde_kg}
                 onChange={e=>setEmirForm(f=>({...f,hammadde_kg:e.target.value}))}
                 placeholder="0.0" inputMode="decimal" step="0.1"/>
             </Field>
             <Field label={`Hedef Adet (${seciliUrun.paket_gr}gr)`}>
               <input style={{...s.input,color:C.gold2,fontFamily:"'JetBrains Mono',monospace",
-                fontSize:18,fontWeight:700,textAlign:"center"}} value={hedefAdet||""} readOnly placeholder="—"/>
+                fontSize:18,fontWeight:700,textAlign:"center"}} value={hedefAdet||""} readOnly placeholder="â€”"/>
             </Field>
           </div>
           <Field label="Talep Tarihi">
@@ -829,7 +846,7 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
         <Field label="Not"><input style={s.input} value={emirForm.notlar}
           onChange={e=>setEmirForm(f=>({...f,notlar:e.target.value}))} placeholder="Opsiyonel..."/></Field>
         <button style={s.btnGold} onClick={emirKaydet} disabled={saving||!seciliUrun}>
-          {saving?"Oluşturuluyor...":"📋 Üretim Emri Oluştur"}
+          {saving?"OluÅŸturuluyor...":"ğŸ“‹ Ãœretim Emri OluÅŸtur"}
         </button>
       </div>
 
@@ -852,42 +869,42 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
           </div>
           {e.durum==="bekliyor" && (
             <button style={{...s.btnBlue,width:"100%"}} onClick={()=>emirOnayla(e.id)}>
-              ▶ Üretime Al
+              â–¶ Ãœretime Al
             </button>
           )}
         </div>
       ))}
     </>}
 
-    {/* ── TAB: ÜRETİM KAYDI ── */}
+    {/* â”€â”€ TAB: ÃœRETÄ°M KAYDI â”€â”€ */}
     {tab==="kayitlar" && <>
       <div style={s.card}>
-        <div style={s.cardTitle}>⚙️ Üretim Gerçekleştir</div>
-        <Field label="Üretim Emri Seç">
+        <div style={s.cardTitle}>âš™ï¸ Ãœretim GerÃ§ekleÅŸtir</div>
+        <Field label="Ãœretim Emri SeÃ§">
           <select style={s.select} value={kayitForm.uretim_emri_id}
             onChange={e=>setKayitForm(f=>({...f,uretim_emri_id:e.target.value,kullanilan_kg:"",uretilen_adet:""}))}>
-            <option value="">-- Emir Seçin --</option>
+            <option value="">-- Emir SeÃ§in --</option>
             {uretimEmirleri.filter(e=>e.durum==="uretimde").map(e=>(
-              <option key={e.id} value={e.id}>{e.emir_no} — {e.urun_ad} ({e.hedef_adet} adet hedef)</option>
+              <option key={e.id} value={e.id}>{e.emir_no} â€” {e.urun_ad} ({e.hedef_adet} adet hedef)</option>
             ))}
           </select>
         </Field>
         {seciliEmir && <>
           <div style={{...s.card,background:C.s2,borderColor:GC[seciliEmir.grade]+"40",marginBottom:12}}>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,fontSize:12}}>
-              <div><span style={{color:C.text3}}>Ürün: </span><span style={{fontWeight:600,color:GC[seciliEmir.grade]}}>{seciliEmir.urun_ad}</span></div>
+              <div><span style={{color:C.text3}}>ÃœrÃ¼n: </span><span style={{fontWeight:600,color:GC[seciliEmir.grade]}}>{seciliEmir.urun_ad}</span></div>
               <div><span style={{color:C.text3}}>Paket: </span><span style={s.mono}>{seciliEmir.paket_gr} gr</span></div>
               <div><span style={{color:C.text3}}>Planlanan KG: </span><span style={s.mono}>{fmt(seciliEmir.hammadde_kg,1)}</span></div>
               <div><span style={{color:C.text3}}>Hedef Adet: </span><span style={s.mono}>{seciliEmir.hedef_adet}</span></div>
             </div>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-            <Field label="Kullanılan KG (Ham)">
+            <Field label="KullanÄ±lan KG (Ham)">
               <input style={s.input} type="number" value={kayitForm.kullanilan_kg}
                 onChange={e=>setKayitForm(f=>({...f,kullanilan_kg:e.target.value}))}
                 placeholder={fmt(seciliEmir.hammadde_kg,1)} inputMode="decimal" step="0.1"/>
             </Field>
-            <Field label="Üretilen Adet">
+            <Field label="Ãœretilen Adet">
               <input style={s.input} type="number" value={kayitForm.uretilen_adet}
                 onChange={e=>setKayitForm(f=>({...f,uretilen_adet:e.target.value}))}
                 placeholder={seciliEmir.hedef_adet} inputMode="numeric"/>
@@ -896,7 +913,7 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
               <input style={s.input} type="number" value={kayitForm.fire_kg}
                 onChange={e=>setKayitForm(f=>({...f,fire_kg:e.target.value}))} placeholder="0" inputMode="decimal"/>
             </Field>
-            <Field label="Üretim Tarihi">
+            <Field label="Ãœretim Tarihi">
               <input style={s.input} type="date" value={kayitForm.uretim_tarihi}
                 onChange={e=>setKayitForm(f=>({...f,uretim_tarihi:e.target.value}))}/>
             </Field>
@@ -904,39 +921,39 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
           {kayitForm.uretilen_adet && <div style={{...s.card,background:C.green2,
             borderColor:"rgba(82,183,136,.3)",marginBottom:12}}>
             <div style={{fontSize:12,color:C.green}}>
-              <div>✓ Üretilecek: <strong style={s.mono}>{kayitForm.uretilen_adet} adet × {seciliEmir.paket_gr}gr = {fmt(uretimNet,2)} kg</strong></div>
+              <div>âœ“ Ãœretilecek: <strong style={s.mono}>{kayitForm.uretilen_adet} adet Ã— {seciliEmir.paket_gr}gr = {fmt(uretimNet,2)} kg</strong></div>
               {parseFloat(kayitForm.fire_kg)>0 &&
-                <div>🔥 Fire: <strong style={{...s.mono,color:C.red}}>{kayitForm.fire_kg} kg</strong></div>}
+                <div>ğŸ”¥ Fire: <strong style={{...s.mono,color:C.red}}>{kayitForm.fire_kg} kg</strong></div>}
             </div>
           </div>}
         </>}
         <Field label="Not"><input style={s.input} value={kayitForm.notlar}
           onChange={e=>setKayitForm(f=>({...f,notlar:e.target.value}))} placeholder="Opsiyonel..."/></Field>
         <button style={s.btnGold} onClick={uretimKaydet} disabled={saving||!seciliEmir}>
-          {saving?"Kaydediliyor...":"✓ Üretimi Tamamla"}
+          {saving?"Kaydediliyor...":"âœ“ Ãœretimi Tamamla"}
         </button>
       </div>
 
       <div style={{fontSize:11,color:C.text3,fontFamily:"'JetBrains Mono',monospace",
-        textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Geçmiş Üretimler</div>
+        textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>GeÃ§miÅŸ Ãœretimler</div>
       <div style={s.card}>
         <div style={s.tscroll}>
           <table style={{...s.table,minWidth:600}}>
             <thead><tr>
-              <th style={s.th}>Parti No</th><th style={s.th}>Ürün</th>
-              <th style={s.th}>Kull. KG</th><th style={s.th}>Üretilen</th>
+              <th style={s.th}>Parti No</th><th style={s.th}>ÃœrÃ¼n</th>
+              <th style={s.th}>Kull. KG</th><th style={s.th}>Ãœretilen</th>
               <th style={s.th}>Net KG</th><th style={s.th}>Fire</th><th style={s.th}>Tarih</th>
             </tr></thead>
             <tbody>
               {uretimKayitlari.length===0
-                ? <tr><td style={{...s.td,textAlign:"center",color:C.text3}} colSpan={7}>Üretim kaydı yok</td></tr>
+                ? <tr><td style={{...s.td,textAlign:"center",color:C.text3}} colSpan={7}>Ãœretim kaydÄ± yok</td></tr>
                 : uretimKayitlari.map(k=><tr key={k.id}>
                     <td style={s.td}><span style={s.lotTag}>{k.parti_no}</span></td>
                     <td style={{...s.td,fontSize:11}}><GradePill grade={k.grade}/> {k.urun_ad}</td>
                     <td style={{...s.td,...s.mono}}>{fmt(k.kullanilan_kg,1)}</td>
                     <td style={{...s.td,...s.mono,color:C.gold2}}>{k.uretilen_adet} adet</td>
                     <td style={{...s.td,...s.mono,color:C.green}}>{fmt(k.uretilen_kg,2)}</td>
-                    <td style={{...s.td,...s.mono,color:k.fire_kg>0?C.red:C.text3}}>{k.fire_kg>0?fmt(k.fire_kg,1):"—"}</td>
+                    <td style={{...s.td,...s.mono,color:k.fire_kg>0?C.red:C.text3}}>{k.fire_kg>0?fmt(k.fire_kg,1):"â€”"}</td>
                     <td style={{...s.td,...s.mono,fontSize:11}}>{k.uretim_tarihi}</td>
                   </tr>)
               }
@@ -946,10 +963,10 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
       </div>
     </>}
 
-    {/* ── TAB: NİHAİ ÜRÜN STOĞU ── */}
+    {/* â”€â”€ TAB: NÄ°HAÄ° ÃœRÃœN STOÄU â”€â”€ */}
     {tab==="urunler" && <>
       <div style={{fontSize:11,color:C.text3,fontFamily:"'JetBrains Mono',monospace",
-        textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Nihai Ürün Stoku</div>
+        textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Nihai ÃœrÃ¼n Stoku</div>
       {urunTanimlari.map(u=>{
         const adet = nihaiStokAdet(u.ad);
         const kg = adet*u.paket_gr/1000;
@@ -971,11 +988,248 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
   </>;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+// SÄ°PARÄ°Å SAYFASI
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
+                       nextSiparisNo, showToast, loadAll, supabase }) {
+  const [tab, setTab] = useState("liste");
+  const [form, setForm] = useState({
+    tarih:today(), musteri_ad:"", satis_temsilcisi:"",
+    urun_tanim_id:"", adet:"", birim_fiyat:"", notlar:""
+  });
+  const [saving, setSaving] = useState(false);
+
+  const set = (k,v) => setForm(f=>({...f,[k]:v}));
+  const seciliUrun = urunTanimlari.find(u=>u.id===form.urun_tanim_id);
+  const stokAdet = seciliUrun ? nihaiStokAdet(seciliUrun.ad) : 0;
+  const toplam = (parseInt(form.adet)||0)*(parseFloat(form.birim_fiyat)||0);
+
+  const kaydet = async () => {
+    if(!form.musteri_ad||!form.urun_tanim_id||!form.adet){
+      showToast("MÃ¼ÅŸteri, Ã¼rÃ¼n ve adet zorunlu","#e07070"); return;
+    }
+    if((parseInt(form.adet)||0) > stokAdet){
+      showToast(`Yetersiz stok! Mevcut: ${stokAdet} adet`,"#e07070"); return;
+    }
+    setSaving(true);
+    const { error } = await supabase.from("siparisler").insert({
+      siparis_no: nextSiparisNo(),
+      tarih: form.tarih,
+      musteri_ad: form.musteri_ad,
+      satis_temsilcisi: form.satis_temsilcisi||null,
+      urun_tanim_id: form.urun_tanim_id,
+      urun_ad: seciliUrun.ad,
+      grade: seciliUrun.grade,
+      paket_gr: seciliUrun.paket_gr,
+      adet: parseInt(form.adet),
+      birim_fiyat: parseFloat(form.birim_fiyat)||0,
+      toplam_tutar: toplam,
+      durum:"bekliyor",
+      notlar: form.notlar||null
+    });
+    if(error){ showToast("Hata: "+error.message,"#e07070"); }
+    else {
+      showToast("âœ“ SipariÅŸ kaydedildi");
+      setForm({tarih:today(),musteri_ad:"",satis_temsilcisi:"",urun_tanim_id:"",adet:"",birim_fiyat:"",notlar:""});
+      loadAll();
+      setTab("liste");
+    }
+    setSaving(false);
+  };
+
+  const durumGuncelle = async (id, durum) => {
+    const siparis = siparisler.find(si=>si.id===id);
+    if(!siparis) return;
+    if(durum==="teslim_edildi") {
+      await supabase.from("nihai_stok").insert({
+        urun_tanim_id: siparis.urun_tanim_id,
+        urun_ad: siparis.urun_ad,
+        grade: siparis.grade,
+        paket_gr: siparis.paket_gr,
+        hareket_tipi:"cikis",
+        adet: siparis.adet,
+        kg: siparis.adet*siparis.paket_gr/1000,
+        tarih: today(),
+        sebep:"SipariÅŸ Teslimi",
+        notlar: siparis.siparis_no
+      });
+    }
+    await supabase.from("siparisler").update({durum}).eq("id",id);
+    showToast(durum==="teslim_edildi"?"âœ“ Teslim edildi â€” stoktan dÃ¼ÅŸÃ¼ldÃ¼":"âœ“ GÃ¼ncellendi");
+    loadAll();
+  };
+
+  const durumRenk = {bekliyor:[C.amber,"rgba(224,155,74,.15)"],
+                     hazirlaniyor:[C.blue,"rgba(106,174,214,.15)"],
+                     teslim_edildi:[C.green,"rgba(82,183,136,.15)"],
+                     iptal:[C.red,"rgba(224,112,112,.15)"]};
+  const durumLabel = {bekliyor:"â³ Bekliyor",hazirlaniyor:"ğŸ“¦ HazÄ±rlanÄ±yor",
+                      teslim_edildi:"âœ“ Teslim",iptal:"âœ• Ä°ptal"};
+
+  const bekleyenler = siparisler.filter(si=>si.durum==="bekliyor"||si.durum==="hazirlaniyor");
+  const topSatis = siparisler.filter(si=>si.durum==="teslim_edildi").reduce((a,si)=>a+si.toplam_tutar,0);
+  const topAdet  = siparisler.filter(si=>si.durum==="teslim_edildi").reduce((a,si)=>a+si.adet,0);
+
+  const temsilciOzet = satisTem.map(t=>{
+    const list = siparisler.filter(si=>si.satis_temsilcisi===t.ad&&si.durum==="teslim_edildi");
+    return {ad:t.ad, siparisSayisi:list.length, toplamTutar:list.reduce((a,si)=>a+si.toplam_tutar,0)};
+  }).filter(t=>t.siparisSayisi>0).sort((a,b)=>b.toplamTutar-a.toplamTutar);
+
+  return <>
+    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:12}}>ğŸ›’ SipariÅŸler</div>
+
+    <div style={s.kpiRow}>
+      <div style={s.kpi}>
+        <div style={{fontSize:10,color:C.text3,fontFamily:"'JetBrains Mono',monospace",marginBottom:4}}>Bekleyen</div>
+        <div style={{fontSize:20,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:C.amber}}>{bekleyenler.length}</div>
+      </div>
+      <div style={s.kpi}>
+        <div style={{fontSize:10,color:C.text3,fontFamily:"'JetBrains Mono',monospace",marginBottom:4}}>Teslim Adet</div>
+        <div style={{fontSize:20,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:C.green}}>{topAdet}</div>
+      </div>
+      <div style={s.kpi}>
+        <div style={{fontSize:10,color:C.text3,fontFamily:"'JetBrains Mono',monospace",marginBottom:4}}>SatÄ±ÅŸ TutarÄ±</div>
+        <div style={{fontSize:16,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:C.gold2}}>{fmtTL(topSatis)}</div>
+      </div>
+    </div>
+
+    <div style={{display:"flex",gap:4,marginBottom:16,background:C.s2,padding:4,borderRadius:8,width:"fit-content"}}>
+      {[["liste","ğŸ“‹ Liste"],["yeni","â• Yeni"],["temsilci","ğŸ‘¤ Temsilci"]].map(([id,lbl])=>(
+        <button key={id} onClick={()=>setTab(id)} style={{padding:"7px 14px",background:tab===id?C.s1:"transparent",
+          border:"none",borderRadius:6,color:tab===id?C.gold2:C.text3,fontFamily:"'Sora',sans-serif",
+          fontSize:12,fontWeight:500,cursor:"pointer"}}>{lbl}</button>
+      ))}
+    </div>
+
+    {tab==="liste" && <>
+      {siparisler.length===0
+        ? <div style={{...s.alertInfo}}><span>â„¹ï¸</span><div>HenÃ¼z sipariÅŸ yok. "Yeni" sekmesinden ekleyin.</div></div>
+        : siparisler.map(si=>{
+            const [renk,bg] = durumRenk[si.durum]||[C.text3,C.s2];
+            return <div key={si.id} style={{...s.card,borderColor:renk+"40"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
+                <div>
+                  <span style={s.lotTag}>{si.siparis_no}</span>
+                  <span style={{marginLeft:8,fontWeight:700,fontSize:13}}>{si.musteri_ad}</span>
+                </div>
+                <span style={{fontSize:10,fontWeight:600,fontFamily:"'JetBrains Mono',monospace",
+                  padding:"3px 9px",borderRadius:20,color:renk,background:bg}}>{durumLabel[si.durum]}</span>
+              </div>
+              <div style={{fontSize:12,color:C.text2,marginBottom:8,display:"grid",gridTemplateColumns:"1fr 1fr",gap:4}}>
+                <div>ğŸ“¦ {si.urun_ad}</div>
+                <div style={s.mono}>{si.adet} adet Ã— {fmtTL(si.birim_fiyat)}</div>
+                <div>ğŸ“… {si.tarih}</div>
+                {si.satis_temsilcisi&&<div>ğŸ‘¤ {si.satis_temsilcisi}</div>}
+              </div>
+              {si.toplam_tutar>0&&<div style={{fontSize:14,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",
+                color:C.gold2,marginBottom:8}}>{fmtTL(si.toplam_tutar)}</div>}
+              {(si.durum==="bekliyor"||si.durum==="hazirlaniyor")&&<div style={{display:"flex",gap:8}}>
+                {si.durum==="bekliyor"&&
+                  <button style={s.btnBlue} onClick={()=>durumGuncelle(si.id,"hazirlaniyor")}>ğŸ“¦ HazÄ±rla</button>}
+                {si.durum==="hazirlaniyor"&&
+                  <button style={s.btnGreen} onClick={()=>durumGuncelle(si.id,"teslim_edildi")}>âœ“ Teslim Et</button>}
+                <button style={s.btnRed} onClick={()=>durumGuncelle(si.id,"iptal")}>Ä°ptal</button>
+              </div>}
+            </div>;
+          })
+      }
+    </>}
+
+    {tab==="yeni" && <div style={s.card}>
+      <div style={s.cardTitle}>â• Yeni SipariÅŸ</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+        <Field label="Tarih">
+          <input style={s.input} type="date" value={form.tarih} onChange={e=>set("tarih",e.target.value)}/>
+        </Field>
+        <Field label="SatÄ±ÅŸ Temsilcisi">
+          <select style={s.select} value={form.satis_temsilcisi} onChange={e=>set("satis_temsilcisi",e.target.value)}>
+            <option value="">-- SeÃ§in --</option>
+            {satisTem.map(t=><option key={t.id} value={t.ad}>{t.ad}</option>)}
+          </select>
+        </Field>
+      </div>
+      <Field label="MÃ¼ÅŸteri AdÄ±">
+        <input style={s.input} value={form.musteri_ad} onChange={e=>set("musteri_ad",e.target.value)} placeholder="Firma / KiÅŸi adÄ±..."/>
+      </Field>
+      <Field label="ÃœrÃ¼n SeÃ§">
+        <select style={s.select} value={form.urun_tanim_id} onChange={e=>set("urun_tanim_id",e.target.value)}>
+          <option value="">-- ÃœrÃ¼n SeÃ§in --</option>
+          {urunTanimlari.map(u=>(
+            <option key={u.id} value={u.id}>{u.ad} â€” Stok: {nihaiStokAdet(u.ad)} adet</option>
+          ))}
+        </select>
+      </Field>
+      {seciliUrun&&<div style={{...s.card,background:C.s2,borderColor:GC[seciliUrun.grade]+"40",marginBottom:12}}>
+        <div style={{display:"flex",gap:16,fontSize:12}}>
+          <GradePill grade={seciliUrun.grade}/>
+          <span><span style={{color:C.text3}}>Paket: </span><span style={s.mono}>{seciliUrun.paket_gr}gr</span></span>
+          <span><span style={{color:C.text3}}>Stok: </span>
+            <span style={{...s.mono,color:stokAdet>0?C.green:C.red,fontWeight:700}}>{stokAdet} adet</span></span>
+        </div>
+      </div>}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
+        <Field label="Adet">
+          <input style={s.input} type="number" value={form.adet} onChange={e=>set("adet",e.target.value)} placeholder="0" inputMode="numeric"/>
+        </Field>
+        <Field label="Birim Fiyat (â‚º)">
+          <input style={s.input} type="number" value={form.birim_fiyat} onChange={e=>set("birim_fiyat",e.target.value)} placeholder="0.00" inputMode="decimal"/>
+        </Field>
+      </div>
+      {toplam>0&&<div style={{...s.card,background:C.s2,marginBottom:12}}>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:14,fontWeight:700}}>
+          <span style={{color:C.text2}}>Toplam Tutar</span>
+          <span style={{fontFamily:"'JetBrains Mono',monospace",color:C.gold2}}>{fmtTL(toplam)}</span>
+        </div>
+      </div>}
+      <Field label="Not">
+        <input style={s.input} value={form.notlar} onChange={e=>set("notlar",e.target.value)} placeholder="Opsiyonel..."/>
+      </Field>
+      <button style={s.btnGold} onClick={kaydet} disabled={saving}>
+        {saving?"Kaydediliyor...":"âœ“ SipariÅŸ Kaydet"}
+      </button>
+    </div>}
+
+    {tab==="temsilci" && <>
+      {temsilciOzet.length===0
+        ? <div style={{...s.alertInfo}}><span>â„¹ï¸</span><div>HenÃ¼z teslim edilmiÅŸ sipariÅŸ yok.</div></div>
+        : temsilciOzet.map((t,i)=>(
+            <div key={t.ad} style={{...s.card,borderColor:i===0?C.gold3:C.border}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div style={{display:"flex",alignItems:"center",gap:10}}>
+                  <div style={{width:32,height:32,borderRadius:"50%",background:C.s3,
+                    display:"flex",alignItems:"center",justifyContent:"center",fontSize:16}}>
+                    {i===0?"ğŸ¥‡":i===1?"ğŸ¥ˆ":i===2?"ğŸ¥‰":"ğŸ‘¤"}
+                  </div>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:13}}>{t.ad}</div>
+                    <div style={{fontSize:11,color:C.text3}}>{t.siparisSayisi} sipariÅŸ teslim</div>
+                  </div>
+                </div>
+                <div style={{fontSize:16,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:C.gold2}}>
+                  {fmtTL(t.toplamTutar)}
+                </div>
+              </div>
+            </div>
+          ))
+      }
+      {temsilciOzet.length>0&&<div style={{...s.card,background:C.s2}}>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:13,fontWeight:700}}>
+          <span style={{color:C.text2}}>Toplam SatÄ±ÅŸ</span>
+          <span style={{fontFamily:"'JetBrains Mono',monospace",color:C.gold2}}>{fmtTL(topSatis)}</span>
+        </div>
+      </div>}
+    </>}
+  </>;
+}
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // STOK SAYFASI
-// ═══════════════════════════════════════════════════════════════
-function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, showToast, loadAll, supabase }) {
-  const [form, setForm] = useState({grade:"Grade 1",kg:"",tarih:today(),sebep:"Satış",notlar:""});
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, urunTanimlari,
+                    nihaiStokAdet, showToast, loadAll, supabase }) {
+  const [tab, setTab] = useState("ham");
+  const [form, setForm] = useState({grade:"Grade 1",kg:"",tarih:today(),sebep:"SatÄ±ÅŸ",notlar:""});
 
   const cikisKaydet = async () => {
     if(!form.kg||!form.tarih){ showToast("KG ve tarih zorunlu","#e07070"); return; }
@@ -988,15 +1242,71 @@ function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, showToast, lo
       sebep:form.sebep, notlar:form.notlar||null
     });
     if(error){ showToast("Hata: "+error.message,"#e07070"); return; }
-    showToast("✓ Çıkış kaydedildi");
+    showToast("âœ“ Ã‡Ä±kÄ±ÅŸ kaydedildi");
     setForm(f=>({...f,kg:"",notlar:""}));
     loadAll();
   };
 
   return <>
-    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>📦 Ham Stok</div>
+    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>ğŸ“¦ Stok</div>
 
-    {/* Grade bazlı stok kutuları */}
+    {/* Tab Bar */}
+    <div style={{display:"flex",gap:4,marginBottom:16,background:C.s2,padding:4,borderRadius:8,width:"fit-content"}}>
+      {[["ham","ğŸŒ¿ Ham Stok"],["nihai","ğŸ“¦ HazÄ±r ÃœrÃ¼n"]].map(([id,lbl])=>(
+        <button key={id} onClick={()=>setTab(id)} style={{padding:"7px 14px",background:tab===id?C.s1:"transparent",
+          border:"none",borderRadius:6,color:tab===id?C.gold2:C.text3,fontFamily:"'Sora',sans-serif",
+          fontSize:12,fontWeight:500,cursor:"pointer"}}>{lbl}</button>
+      ))}
+    </div>
+
+    {/* â”€â”€ TAB: NÄ°HAÄ° ÃœRÃœN â”€â”€ */}
+    {tab==="nihai" && <>
+      <div style={{display:"grid",gap:8}}>
+        {urunTanimlari.length===0
+          ? <div style={{...s.alertInfo}}><span>â„¹ï¸</span><div>HenÃ¼z Ã¼rÃ¼n tanÄ±mÄ± yok. Ãœretim sayfasÄ±ndan ekleyin.</div></div>
+          : urunTanimlari.map(u=>{
+              const adet = nihaiStokAdet(u.ad);
+              const kg = adet*u.paket_gr/1000;
+              return <div key={u.id} style={{...s.card,borderColor:adet>0?GC[u.grade]+"50":C.border,marginBottom:0}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div>
+                    <GradePill grade={u.grade}/>
+                    <span style={{marginLeft:8,fontWeight:700,fontSize:13}}>{u.ad}</span>
+                    <div style={{fontSize:10,color:C.text3,marginTop:4,fontFamily:"'JetBrains Mono',monospace"}}>
+                      {u.paket_gr}gr / paket
+                    </div>
+                  </div>
+                  <div style={{textAlign:"right"}}>
+                    <div style={{fontSize:28,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",
+                      color:adet>0?C.gold2:C.red}}>{adet}</div>
+                    <div style={{fontSize:10,color:C.text3}}>adet</div>
+                    <div style={{fontSize:11,color:C.text2,fontFamily:"'JetBrains Mono',monospace"}}>{fmt(kg,2)} kg</div>
+                  </div>
+                </div>
+              </div>;
+            })
+        }
+      </div>
+      {urunTanimlari.length>0 && <div style={{...s.card,marginTop:12,background:C.s2}}>
+        <div style={{fontSize:12,color:C.text2,fontWeight:600,marginBottom:8}}>Toplam</div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:13}}>
+          <span style={{color:C.text3}}>Toplam Adet</span>
+          <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:700,color:C.gold2}}>
+            {urunTanimlari.reduce((a,u)=>a+nihaiStokAdet(u.ad),0)} adet
+          </span>
+        </div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:13,marginTop:6}}>
+          <span style={{color:C.text3}}>Toplam KG</span>
+          <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:700,color:C.green}}>
+            {fmt(urunTanimlari.reduce((a,u)=>a+nihaiStokAdet(u.ad)*u.paket_gr/1000,0),2)} kg
+          </span>
+        </div>
+      </div>}
+    </>}
+
+    {/* â”€â”€ TAB: HAM STOK â”€â”€ */}
+    {tab==="ham" && <>
+    {/* Grade bazlÄ± stok kutularÄ± */}
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:12}}>
       {GRADES.map(g=>{
         const net = hamStok(g);
@@ -1006,15 +1316,15 @@ function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, showToast, lo
           <div style={{fontSize:26,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:GC[g]}}>{fmt(net,1)}</div>
           <div style={{fontSize:10,color:C.text3}}>kg net</div>
           <div style={{fontSize:10,color:C.text3,marginTop:4}}>
-            ↑{fmt(row.toplam_giris,1)} ↓{fmt(row.toplam_cikis,1)}
+            â†‘{fmt(row.toplam_giris,1)} â†“{fmt(row.toplam_cikis,1)}
           </div>
         </div>;
       })}
     </div>
 
-    {/* Çıkış formu */}
+    {/* Ã‡Ä±kÄ±ÅŸ formu */}
     <div style={s.card}>
-      <div style={s.cardTitle}>📤 Stoktan Çıkış</div>
+      <div style={s.cardTitle}>ğŸ“¤ Stoktan Ã‡Ä±kÄ±ÅŸ</div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
         <Field label="Grade">
           <select style={s.select} value={form.grade} onChange={e=>setForm(f=>({...f,grade:e.target.value}))}>
@@ -1030,18 +1340,18 @@ function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, showToast, lo
         </Field>
         <Field label="Sebep">
           <select style={s.select} value={form.sebep} onChange={e=>setForm(f=>({...f,sebep:e.target.value}))}>
-            {["Satış","İşleme","Fire","Diğer"].map(s=><option key={s}>{s}</option>)}
+            {["SatÄ±ÅŸ","Ä°ÅŸleme","Fire","DiÄŸer"].map(s=><option key={s}>{s}</option>)}
           </select>
         </Field>
       </div>
       <Field label="Tarih"><input style={s.input} type="date" value={form.tarih} onChange={e=>setForm(f=>({...f,tarih:e.target.value}))}/></Field>
       <Field label="Not"><input style={s.input} value={form.notlar} onChange={e=>setForm(f=>({...f,notlar:e.target.value}))} placeholder="..."/></Field>
-      <button style={s.btnGold} onClick={cikisKaydet}>📤 Çıkış Kaydet</button>
+      <button style={s.btnGold} onClick={cikisKaydet}>ğŸ“¤ Ã‡Ä±kÄ±ÅŸ Kaydet</button>
     </div>
 
-    {/* Son çıkışlar */}
+    {/* Son Ã§Ä±kÄ±ÅŸlar */}
     <div style={{fontSize:11,color:C.text3,fontFamily:"'JetBrains Mono',monospace",
-      textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Son Çıkışlar</div>
+      textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Son Ã‡Ä±kÄ±ÅŸlar</div>
     <div style={s.card}>
       <div style={s.tscroll}>
         <table style={s.table}>
@@ -1055,18 +1365,20 @@ function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, showToast, lo
               <td style={s.td}><GradePill grade={c.grade}/></td>
               <td style={{...s.td,...s.mono}}>{fmt(c.kg,1)}</td>
               <td style={{...s.td,fontSize:11}}>{c.sebep}</td>
-              <td style={{...s.td,fontSize:11,color:C.text3}}>{c.notlar||"—"}</td>
+              <td style={{...s.td,fontSize:11,color:C.text3}}>{c.notlar||"â€”"}</td>
             </tr>)}
           </tbody>
         </table>
       </div>
     </div>
+    </>}
   </>;
 }
 
-// ═══════════════════════════════════════════════════════════════
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // RAPOR SAYFASI
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalStok,
                      hamStokOzet, nihaiStokAdet, urunTanimlari }) {
   const [tab, setTab] = useState("ozet");
@@ -1080,11 +1392,11 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
   const topUretim  = uretimKayitlari.reduce((a,k)=>a+k.uretilen_adet,0);
 
   return <>
-    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>📊 Raporlar</div>
+    <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>ğŸ“Š Raporlar</div>
 
     <div style={{display:"flex",gap:4,marginBottom:16,background:C.s2,padding:4,
       borderRadius:8,overflowX:"auto"}}>
-      {[["ozet","Özet"],["uretim","Üretim"],["maliyet","Maliyet"]].map(([id,lbl])=>(
+      {[["ozet","Ã–zet"],["uretim","Ãœretim"],["maliyet","Maliyet"]].map(([id,lbl])=>(
         <button key={id} onClick={()=>setTab(id)} style={{padding:"7px 14px",whiteSpace:"nowrap",
           background:tab===id?C.s1:"transparent",border:"none",borderRadius:6,
           color:tab===id?C.gold2:C.text3,fontFamily:"'Sora',sans-serif",fontSize:12,fontWeight:500,cursor:"pointer"}}>
@@ -1095,16 +1407,16 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
 
     {tab==="ozet" && <>
       <div style={s.card}>
-        <div style={s.cardTitle}>📦 Genel Özet</div>
+        <div style={s.cardTitle}>ğŸ“¦ Genel Ã–zet</div>
         {[
-          ["Toplam Alım",`${fmt(topAlimKg,1)} kg`,C.gold2],
-          ["Ayrıştırılan",`${fmt(topAyrist,1)} kg`,C.green],
+          ["Toplam AlÄ±m",`${fmt(topAlimKg,1)} kg`,C.gold2],
+          ["AyrÄ±ÅŸtÄ±rÄ±lan",`${fmt(topAyrist,1)} kg`,C.green],
           ["Toplam Fire",`${fmt(topFire,1)} kg`,C.red],
-          ["Fire Oranı",`%${fmt(topAlimKg>0?topFire/topAlimKg*100:0,2)}`,C.amber],
-          ["Toplam Alım Bedeli",fmtTL(topAlimTL),C.gold2],
+          ["Fire OranÄ±",`%${fmt(topAlimKg>0?topFire/topAlimKg*100:0,2)}`,C.amber],
+          ["Toplam AlÄ±m Bedeli",fmtTL(topAlimTL),C.gold2],
           ["Toplam Gider",fmtTL(topGider),C.amber],
-          ["KG Başına Maliyet",fmtTL(kgBasi),C.green],
-          ["Toplam Üretim",`${topUretim} adet`,C.purple],
+          ["KG BaÅŸÄ±na Maliyet",fmtTL(kgBasi),C.green],
+          ["Toplam Ãœretim",`${topUretim} adet`,C.purple],
         ].map(([l,v,c])=>(
           <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"9px 0",
             borderBottom:`1px solid ${C.border}`,fontSize:13}}>
@@ -1115,7 +1427,7 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
       </div>
 
       <div style={s.card}>
-        <div style={s.cardTitle}>🥧 Grade Dağılımı</div>
+        <div style={s.cardTitle}>ğŸ¥§ Grade DaÄŸÄ±lÄ±mÄ±</div>
         {GRADES.map(g=>{
           const row = hamStokOzet.find(r=>r.grade===g)||{};
           const giris = row.toplam_giris||0;
@@ -1138,9 +1450,9 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
 
     {tab==="uretim" && <>
       <div style={s.card}>
-        <div style={s.cardTitle}>🏭 Üretim Özeti</div>
+        <div style={s.cardTitle}>ğŸ­ Ãœretim Ã–zeti</div>
         {uretimKayitlari.length===0
-          ? <div style={{textAlign:"center",padding:24,color:C.text3}}>Henüz üretim yok</div>
+          ? <div style={{textAlign:"center",padding:24,color:C.text3}}>HenÃ¼z Ã¼retim yok</div>
           : <>
             {[...new Set(uretimKayitlari.map(k=>k.urun_ad))].map(urun=>{
               const list = uretimKayitlari.filter(k=>k.urun_ad===urun);
@@ -1151,7 +1463,7 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
               return <div key={urun} style={{...s.card,background:C.s2,borderColor:GC[grade]+"40",marginBottom:8}}>
                 <div style={{fontWeight:700,color:GC[grade],marginBottom:8}}>{urun}</div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:6,fontSize:12}}>
-                  <div><span style={{color:C.text3}}>Üretim: </span><span style={s.mono}>{list.length}×</span></div>
+                  <div><span style={{color:C.text3}}>Ãœretim: </span><span style={s.mono}>{list.length}Ã—</span></div>
                   <div><span style={{color:C.text3}}>Adet: </span><span style={s.mono}>{adet}</span></div>
                   <div><span style={{color:C.text3}}>KG: </span><span style={s.mono}>{fmt(kg,2)}</span></div>
                   <div><span style={{color:C.text3}}>Stok: </span><span style={{...s.mono,color:C.gold2}}>{nihaiStokAdet(urun)} adet</span></div>
@@ -1166,16 +1478,16 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
 
     {tab==="maliyet" && <>
       <div style={s.card}>
-        <div style={s.cardTitle}>🧮 Maliyet Analizi</div>
+        <div style={s.cardTitle}>ğŸ§® Maliyet Analizi</div>
         <div style={{textAlign:"center",padding:"16px 0",borderBottom:`1px solid ${C.border}`,marginBottom:12}}>
           <div style={{fontSize:10,color:C.text3,fontFamily:"'JetBrains Mono',monospace",
-            textTransform:"uppercase",letterSpacing:"1px",marginBottom:8}}>KG BAŞINA MALİYET</div>
+            textTransform:"uppercase",letterSpacing:"1px",marginBottom:8}}>KG BAÅINA MALÄ°YET</div>
           <div style={{fontSize:44,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:C.gold2}}>
             {fmtTL(kgBasi)}
           </div>
-          <div style={{fontSize:11,color:C.text3,marginTop:4}}>/ kilogram (alım + genel gider)</div>
+          <div style={{fontSize:11,color:C.text3,marginTop:4}}>/ kilogram (alÄ±m + genel gider)</div>
         </div>
-        {[["Çiftçi Alım Bedeli",fmtTL(topAlimTL)],["Genel Giderler",fmtTL(topGider)],
+        {[["Ã‡iftÃ§i AlÄ±m Bedeli",fmtTL(topAlimTL)],["Genel Giderler",fmtTL(topGider)],
           ["TOPLAM",fmtTL(topAlimTL+topGider)]].map(([l,v],i)=>(
           <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"9px 0",
             borderBottom:i<2?`1px solid ${C.border}`:"none",fontSize:i===2?14:12,
@@ -1186,9 +1498,9 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
         ))}
       </div>
 
-      {/* Aylık gider tablosu */}
+      {/* AylÄ±k gider tablosu */}
       <div style={s.card}>
-        <div style={s.cardTitle}>📅 Aylık Gider</div>
+        <div style={s.cardTitle}>ğŸ“… AylÄ±k Gider</div>
         {[...new Set(giderler.map(g=>g.ay))].sort().reverse().map(ay=>{
           const list = giderler.filter(g=>g.ay===ay);
           const top = list.reduce((a,g)=>a+g.tutar,0);
@@ -1210,3 +1522,4 @@ function RaporPage({ girisler, ayristirmalar, giderler, uretimKayitlari, nihalSt
     </>}
   </>;
 }
+
