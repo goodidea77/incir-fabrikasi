@@ -21,6 +21,7 @@ const C = {
   g1:"#52b788", g2:"#6aaed6", g3:"#e09b4a", gh:"#e07070",
 };
 const GC = { "Grade 1":C.g1, "Grade 2":C.g2, "Grade 3":C.g3, "Hurda":C.gh };
+const ADMIN_PIN = "1234"; // Yönetici PIN — değiştirmek için bu satırı düzenleyin
 const GRADES = ["Grade 1","Grade 2","Grade 3","Hurda"];
 
 // ── YARDIMCI FONKSİYONLAR ────────────────────────────────────
@@ -683,6 +684,7 @@ function AyristPage({ girisler, ayristirmalar, showToast, loadAll, supabase }) {
 function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
                       hamStok, nihaiStokAdet, nextEmiNo, showToast, loadAll, supabase }) {
   const [tab, setTab] = useState("emirler"); // emirler | kayitlar | urunler
+  const [pinAcik, setPinAcik] = useState(null); // {id, tip} veya null
   const [emirForm, setEmirForm] = useState({
     urun_tanim_id:"", hammadde_kg:"", notlar:"", talep_tarihi:today()
   });
@@ -791,6 +793,13 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
     loadAll();
   };
 
+  const oncelikGuncelle = async (id, tip) => {
+    const yeniOncelik = tip==="uretim" ? "acil" : "normal";
+    await supabase.from("uretim_emirleri").update({oncelik:yeniOncelik}).eq("id",id);
+    showToast(yeniOncelik==="acil"?"🔴 Acil olarak işaretlendi":"↩ Normal önceliğe alındı");
+    loadAll();
+  };
+
   return <>
     <div style={{fontSize:18,fontWeight:700,color:C.gold2,marginBottom:16}}>🏭 Üretim</div>
 
@@ -851,14 +860,23 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
       </div>
 
       <div style={{fontSize:11,color:C.text3,fontFamily:"'JetBrains Mono',monospace",
-        textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Emirler</div>
-      {uretimEmirleri.map(e=>(
-        <div key={e.id} style={{...s.card,borderColor:e.durum==="bekliyor"?C.amber3:
-          e.durum==="uretimde"?C.blue2:C.border}}>
+        textTransform:"uppercase",letterSpacing:"0.7px",marginBottom:8}}>Emirler (FIFO Sırası)</div>
+      {[...uretimEmirleri]
+        .sort((a,b)=>{
+          if(a.oncelik==="acil"&&b.oncelik!=="acil") return -1;
+          if(b.oncelik==="acil"&&a.oncelik!=="acil") return 1;
+          return new Date(a.created_at)-new Date(b.created_at);
+        })
+        .map((e,idx)=>(
+        <div key={e.id} style={{...s.card,borderColor:e.oncelik==="acil"?C.red:e.durum==="bekliyor"?C.amber3:
+          e.durum==="uretimde"?C.blue2:C.border,boxShadow:e.oncelik==="acil"?"0 0 0 1px "+C.red:"none"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
-            <div>
+            <div style={{display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
+              <span style={{...s.mono,fontSize:9,color:C.text3,background:C.s3,padding:"2px 6px",borderRadius:4}}>#{idx+1}</span>
+              {e.oncelik==="acil"&&<span style={{fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20,
+                background:"rgba(224,112,112,.2)",color:C.red,border:"1px solid rgba(224,112,112,.4)"}}>🔴 ACİL</span>}
               <span style={s.lotTag}>{e.emir_no}</span>
-              <span style={{marginLeft:8,fontWeight:700,fontSize:13,color:GC[e.grade]}}>{e.urun_ad}</span>
+              <span style={{fontWeight:700,fontSize:13,color:GC[e.grade]}}>{e.urun_ad}</span>
             </div>
             <StatusBadge durum={e.durum}/>
           </div>
@@ -867,11 +885,15 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
             <div><span style={{color:C.text3}}>Hedef: </span><span style={s.mono}>{e.hedef_adet} adet</span></div>
             <div><span style={{color:C.text3}}>Tarih: </span><span style={s.mono}>{e.talep_tarihi}</span></div>
           </div>
-          {e.durum==="bekliyor" && (
-            <button style={{...s.btnBlue,width:"100%"}} onClick={()=>emirOnayla(e.id)}>
-              ▶ Üretime Al
-            </button>
-          )}
+          <div style={{display:"flex",gap:8,marginTop:4}}>
+            {e.durum==="bekliyor" && (
+              <button style={{...s.btnBlue,flex:1}} onClick={()=>emirOnayla(e.id)}>▶ Üretime Al</button>
+            )}
+            {e.oncelik!=="acil"
+              ? <button style={{...s.btnRed,fontSize:11}} onClick={()=>setPinAcik({id:e.id,tip:"uretim"})}>🔴 Acil Yap</button>
+              : <button style={{...s.btnOutline,fontSize:11}} onClick={()=>setPinAcik({id:e.id,tip:"uretim_normal"})}>↩ Normale Al</button>
+            }
+          </div>
         </div>
       ))}
     </>}
@@ -985,7 +1007,55 @@ function UretimPage({ urunTanimlari, uretimEmirleri, uretimKayitlari, nihalStok,
         </div>;
       })}
     </>}
+    {pinAcik && <AdminPinModal
+      baslik={pinAcik.tip==="uretim"?"Acil Öncelik Ver":"Normale Al"}
+      onSuccess={()=>oncelikGuncelle(pinAcik.id, pinAcik.tip)}
+      onClose={()=>setPinAcik(null)}/>}
   </>;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// YÖNETİCİ PIN MODALI
+// ═══════════════════════════════════════════════════════════════
+function AdminPinModal({ baslik, onSuccess, onClose }) {
+  const [pin, setPin] = useState("");
+  const [hata, setHata] = useState(false);
+
+  const kontrol = () => {
+    if(pin === ADMIN_PIN) { onSuccess(); onClose(); }
+    else { setHata(true); setPin(""); setTimeout(()=>setHata(false),1500); }
+  };
+
+  return <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.75)",zIndex:600,
+    display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+    <div style={{background:C.s1,borderRadius:16,padding:24,width:"100%",maxWidth:320,
+      border:`1px solid ${C.border2}`}}>
+      <div style={{textAlign:"center",marginBottom:20}}>
+        <div style={{fontSize:32}}>🔐</div>
+        <div style={{fontSize:15,fontWeight:700,color:C.gold2,marginTop:8}}>Yönetici Onayı</div>
+        <div style={{fontSize:12,color:C.text3,marginTop:4}}>{baslik}</div>
+      </div>
+      <div style={{marginBottom:16}}>
+        <input
+          type="password"
+          maxLength={6}
+          value={pin}
+          onChange={e=>setPin(e.target.value)}
+          onKeyDown={e=>e.key==="Enter"&&kontrol()}
+          placeholder="PIN giriniz"
+          autoFocus
+          style={{...s.input,textAlign:"center",fontSize:24,letterSpacing:8,
+            borderColor:hata?C.red:C.border,
+            background:hata?"rgba(224,112,112,.1)":C.s2}}/>
+        {hata&&<div style={{textAlign:"center",fontSize:11,color:C.red,marginTop:6}}>Yanlış PIN, tekrar deneyin</div>}
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <button onClick={onClose} style={s.btnOutline}>İptal</button>
+        <button onClick={kontrol} style={s.btnGold}>Onayla</button>
+      </div>
+    </div>
+  </div>;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1076,7 +1146,7 @@ function BildirimModal({ bildirim, onClose }) {
 // STOK SAYFASI
 // ═══════════════════════════════════════════════════════════════
 function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, urunTanimlari,
-                    nihaiStokAdet, showToast, loadAll, supabase }) {
+                    nihaiStokAdet, nihalStok, showToast, loadAll, supabase }) {
   const [tab, setTab] = useState("ham");
   const [form, setForm] = useState({grade:"Grade 1",kg:"",tarih:today(),sebep:"Satış",notlar:""});
 
@@ -1110,14 +1180,20 @@ function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, urunTanimlari
 
     {/* Nihai Ürün Stoku */}
     {tab==="nihai" && <>
+      <div style={{...s.alertOk,marginBottom:12}}><span>📋</span><div>Ürünler <strong>FIFO sırasına</strong> göre gösterilir — en eski üretim partisi önce sevk edilmeli.</div></div>
       <div style={{display:"grid",gap:8}}>
         {urunTanimlari.length===0
           ? <div style={{...s.alertInfo}}><span>ℹ️</span><div>Henüz ürün tanımı yok.</div></div>
           : urunTanimlari.map(u=>{
               const adet = nihaiStokAdet(u.ad);
               const kg = adet*u.paket_gr/1000;
+              // FIFO: üretim girişlerini en eskiden yeniye sırala
+              const fifoGirisler = nihalStok
+                .filter(r=>r.urun_ad===u.ad&&r.hareket_tipi==="giris")
+                .sort((a,b)=>new Date(a.tarih)-new Date(b.tarih));
+              const ilkParti = fifoGirisler[0];
               return <div key={u.id} style={{...s.card,borderColor:adet>0?GC[u.grade]+"50":C.border,marginBottom:0}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:adet>0?8:0}}>
                   <div>
                     <GradePill grade={u.grade}/>
                     <span style={{marginLeft:8,fontWeight:700,fontSize:13}}>{u.ad}</span>
@@ -1129,6 +1205,15 @@ function StokPage({ hamStokOzet, hamStok, ayristirmalar, cikislar, urunTanimlari
                     <div style={{fontSize:11,color:C.text2,fontFamily:"'JetBrains Mono',monospace"}}>{fmt(kg,2)} kg</div>
                   </div>
                 </div>
+                {adet>0&&ilkParti&&<div style={{background:C.s3,borderRadius:6,padding:"6px 10px",
+                  display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:6}}>
+                    <span style={{fontSize:9,fontWeight:700,padding:"2px 6px",borderRadius:4,
+                      background:"rgba(82,183,136,.2)",color:C.green,border:"1px solid rgba(82,183,136,.3)"}}>📦 ÖNCE ÇIK</span>
+                    <span style={{fontSize:10,fontFamily:"'JetBrains Mono',monospace",color:C.text2}}>{ilkParti.notlar||"—"}</span>
+                  </div>
+                  <span style={{fontSize:10,color:C.text3,fontFamily:"'JetBrains Mono',monospace"}}>{ilkParti.tarih}</span>
+                </div>}
               </div>;
             })
         }
@@ -1378,6 +1463,7 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
     musteri_tel:"", musteri_email:"", notlar:""
   });
   const [bildirim, setBildirim] = useState(null);
+  const [sipPinAcik, setSipPinAcik] = useState(null);
   const [saving, setSaving] = useState(false);
 
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
@@ -1449,6 +1535,12 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
     setSaving(false);
   };
 
+  const sipOncelikGuncelle = async (id, tip) => {
+    await supabase.from("siparisler").update({oncelik:tip}).eq("id",id);
+    showToast(tip==="acil"?"🔴 Sipariş acil olarak işaretlendi":"↩ Normal önceliğe alındı");
+    loadAll();
+  };
+
   const durumGuncelle = async (id, durum) => {
     const siparis = siparisler.find(si=>si.id===id);
     if(!siparis) return;
@@ -1506,13 +1598,22 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
     {tab==="liste" && <>
       {siparisler.length===0
         ? <div style={{...s.alertInfo}}><span>ℹ️</span><div>Henüz sipariş yok. "Yeni" sekmesinden ekleyin.</div></div>
-        : siparisler.map(si=>{
+        : [...siparisler]
+          .sort((a,b)=>{
+            if(a.oncelik==="acil"&&b.oncelik!=="acil") return -1;
+            if(b.oncelik==="acil"&&a.oncelik!=="acil") return 1;
+            return new Date(a.created_at)-new Date(b.created_at);
+          })
+          .map((si,idx)=>{
             const [renk,bg] = dRenk[si.durum]||[C.text3,C.s2];
             return <div key={si.id} style={{...s.card,borderColor:renk+"40"}}>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
-                <div>
+                <div style={{display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
+                  <span style={{...s.mono,fontSize:9,color:C.text3,background:C.s3,padding:"2px 6px",borderRadius:4}}>#{idx+1}</span>
+                  {si.oncelik==="acil"&&<span style={{fontSize:10,fontWeight:700,padding:"2px 8px",borderRadius:20,
+                    background:"rgba(224,112,112,.2)",color:C.red,border:"1px solid rgba(224,112,112,.4)"}}>🔴 ACİL</span>}
                   <span style={s.lotTag}>{si.siparis_no}</span>
-                  <span style={{marginLeft:8,fontWeight:700,fontSize:13}}>{si.musteri_ad}</span>
+                  <span style={{fontWeight:700,fontSize:13}}>{si.musteri_ad}</span>
                 </div>
                 <span style={{fontSize:10,fontWeight:600,padding:"3px 9px",borderRadius:20,color:renk,background:bg}}>{dLabel[si.durum]}</span>
               </div>
@@ -1523,11 +1624,16 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
                 {si.satis_temsilcisi&&<div>👤 {si.satis_temsilcisi}</div>}
               </div>
               {si.toplam_tutar>0&&<div style={{fontSize:14,fontWeight:700,fontFamily:"'JetBrains Mono',monospace",color:C.gold2,marginBottom:8}}>{fmtTL(si.toplam_tutar)}</div>}
-              {(si.durum==="bekliyor"||si.durum==="stok_bekleniyor"||si.durum==="hazirlaniyor")&&<div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap",marginTop:4}}>
                 {(si.durum==="bekliyor"||si.durum==="stok_bekleniyor")&&<button style={s.btnBlue} onClick={()=>durumGuncelle(si.id,"hazirlaniyor")}>📦 Hazırla</button>}
                 {si.durum==="hazirlaniyor"&&<button style={s.btnGreen} onClick={()=>durumGuncelle(si.id,"teslim_edildi")}>✓ Teslim Et</button>}
-                <button style={s.btnRed} onClick={()=>durumGuncelle(si.id,"iptal")}>İptal</button>
-              </div>}
+                {si.durum!=="teslim_edildi"&&si.durum!=="iptal"&&(
+                  si.oncelik!=="acil"
+                    ? <button style={{...s.btnRed,fontSize:11}} onClick={()=>setSipPinAcik({id:si.id,tip:"acil"})}>🔴 Acil</button>
+                    : <button style={{...s.btnOutline,fontSize:11}} onClick={()=>setSipPinAcik({id:si.id,tip:"normal"})}>↩ Normal</button>
+                )}
+                {si.durum!=="teslim_edildi"&&<button style={{...s.btnRed,fontSize:11,background:"transparent"}} onClick={()=>durumGuncelle(si.id,"iptal")}>İptal</button>}
+              </div>
             </div>;
           })
       }
@@ -1621,6 +1727,11 @@ function SiparisPage({ siparisler, satisTem, urunTanimlari, nihaiStokAdet,
         </div>
       </div>}
     </>}
+
+    {sipPinAcik && <AdminPinModal
+      baslik={sipPinAcik.tip==="acil"?"Siparişi Acil Yap":"Normale Al"}
+      onSuccess={()=>sipOncelikGuncelle(sipPinAcik.id, sipPinAcik.tip)}
+      onClose={()=>setSipPinAcik(null)}/>}
 
     {/* BİLDİRİM MODALI */}
     {bildirim && <BildirimModal bildirim={bildirim} onClose={()=>{setBildirim(null);setTab("liste");}}/>}
